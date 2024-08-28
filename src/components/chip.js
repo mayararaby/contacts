@@ -3,7 +3,6 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import MaleIcon from '@mui/icons-material/Male';
 import FemaleIcon from '@mui/icons-material/Female';
-import { blue, pink } from '@mui/material/colors';
 
 export const ChipGender = ({ gender }) => {
   let chipColor, IconComponent, IconColor;

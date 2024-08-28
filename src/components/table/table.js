@@ -15,7 +15,7 @@ import { ContactSmallCard } from '../smallCard';
 import {EditButton} from "../edit"
 import "./index.css"
 
-export const CardItem = ({ rows }) => {
+export const ResultTable = ({ rows }) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const handleChangeRowsPerPage = (event) => {
