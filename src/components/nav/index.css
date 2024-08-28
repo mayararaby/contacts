@@ -1,0 +1,19 @@
+.img-nav{
+  width: 50px;
+}
+.nav-title-container{
+  display: flex;
+  align-items: center;
+}
+
+.nav-title-char{
+  color: var(--main-bg-color);
+  font-weight: bolder;
+  font-size: 35px;
+}
+
+.nav-container{
+  display: flex;
+  align-items: center;
+  margin-inline:10px ;
+}

@@ -1,0 +1,74 @@
+.home-container {
+  position: relative;
+}
+
+.home-page-content,
+.home-page {
+  height: 90%;
+}
+
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.home-page {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  flex-direction: column;
+}
+
+.home-page-content{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+
+
+.sidebar-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Centers the menu vertically */
+  padding: 5px;
+  background-color: var(--main-bg-color);
+  height: 80%;
+  border-radius: 0px 20px 20px 0px;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    /* Subtle top shadow */
+    0 4px 8px rgba(0, 0, 0, 0.2),
+    /* Main shadow */
+    0 8px 16px rgba(0, 0, 0, 0.1);
+  /* Soft ambient shadow */
+}
+
+.sidebar-container>div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* Distributes icons evenly */
+  height: 100%;
+  /* Ensures the icons are spaced within the available height */
+}
+
+.menu-icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content-container {
+  height: 100%;
+  width: 70%;
+}

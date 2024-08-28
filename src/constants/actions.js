@@ -1,0 +1,2 @@
+export const SET_NEW_CONTACTS = "SET_NEW_CONTACTS"
+export const SET_NEW_CONTACT = "SET_NEW_CONTACT"
