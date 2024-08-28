@@ -5,39 +5,45 @@ import { fetchContacts } from '../../services/callContactsService';
 import "./style.css";
 import { HeaderNav } from '../../components/nav/header';
 import { Footer } from '../../components/footer';
+import { CardContact } from '../../components/card/cards';
+import { useNavigate } from 'react-router-dom';
 export const Home = () => {
-  const dispatch = useDispatch();
+
   const availableContacts = useSelector((state) => state.contacts);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    // Fetch contacts and handle loading state
-    try {
-      fetchContacts(dispatch);
-    } finally {
-      // Ensure loading is turned off after fetching data
-      setLoading(false);
-    }
-  }, [dispatch]);
+  useEffect(()=>{
+    if(availableContacts.length) setLoading(false)
+  },[availableContacts])
+  
 
-  // Determine if contacts are still being fetched
-  const isLoading = loading || (availableContacts && availableContacts.length === 0);
+  const navigateToContacts = () => {
+    navigate('/contacts');
 
+  }
   return (
     <div className="home-container">
-      {isLoading ? (
-        <div className='loading'>
-          <CircularProgress color="inherit" />
-        </div>
-      ) :
-        <div className='home-body-container'>
-          <HeaderNav />
 
-          <div className='content-container'></div>
-          <Footer />
+      <div className='body-container'>
+        <HeaderNav />
 
+        <div className='content-container'>
+          {loading ? (
+            <div className='loading'>
+              <CircularProgress color="inherit" />
+            </div>
+          ) : <div className='cards-container'>
+            <button className="home-explore-button" onClick={navigateToContacts}> Explore Contacts</button>
+
+            {/* <CardContact rows={availableContacts} /> */}
+          </div>
+          }
         </div>
-      }
+        <Footer />
+
+      </div>
+
     </div>
   );
 };

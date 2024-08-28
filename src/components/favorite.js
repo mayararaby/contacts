@@ -23,7 +23,7 @@ export const LikeButton = ({ selectedContact }) => {
 
   return (
     <IconButton onClick={handleClick}>
-      {selectedContact.liked ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon />}
+      {selectedContact?.liked ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon />}
     </IconButton>
   );
 };
