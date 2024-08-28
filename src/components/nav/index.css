@@ -13,10 +13,10 @@
   color: var(--main-light-text-color);
   font-size: 40px;
   font-weight: 900;
-  margin-inline: 50px;
+  margin-inline: 40px;
 }
 
 .menu-icon-container{
-  margin-inline: 50px;
+  margin-inline: 40px;
   display: flex;
 }

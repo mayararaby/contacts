@@ -9,7 +9,6 @@ export const fetchContacts = async (dispatch) => {
     const contacts = await axios.get(GET_CONTACT_URL);
 
     // Handle the response data
-    console.log('Data request:', contacts.data.results);
     dispatch(setNewContacts(contacts.data.results))
     return contacts.data;
   } catch (error) {

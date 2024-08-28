@@ -5,7 +5,6 @@ import { fetchContacts } from '../../services/callContactsService';
 import "./style.css";
 import { HeaderNav } from '../../components/nav/header';
 import { Footer } from '../../components/footer';
-import { CardContact } from '../../components/card/cards';
 import { useNavigate } from 'react-router-dom';
 export const Home = () => {
 

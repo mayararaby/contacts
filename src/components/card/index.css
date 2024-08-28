@@ -1,62 +1,18 @@
-.cards-container-parent {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 16px;
-  height: 100%;
-  overflow: scroll;
-  margin: 10px;
+.card-item{
+  margin:20px;
+  width: 300px;
+  transition: box-shadow 0.3s ease; 
 }
-
-.card-item {
-  width: 240px;
-  padding: 16px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.card-item:hover{
+  box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.15), /* Deeper shadow on hover */
+    0 4px 8px rgba(0, 0, 0, 0.12);  /* More pronounced secondary shadow */
+}
+.actions-card-container{
   display: flex;
-  flex-direction: column;
   align-items: center;
-}
-
-.card-header {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 8px;
-  text-align: center;
-}
-
-.card-description {
-  font-size: 14px;
-  color: #555;
-  margin-bottom: 8px;
-  text-align: center;
-}
-
-.card-img-container {
-  margin: 12px 0;
-}
-
-.card-img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.MuiStack-root {
-  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
   justify-content: space-between;
   width: 100%;
-}
-
-.MuiChip-root {
-  display: flex;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.MuiButtonBase-root {
-  margin: 0 4px;
 }
