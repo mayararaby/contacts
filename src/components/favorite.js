@@ -14,12 +14,12 @@ export const LikeButton = ({ selectedContact, selectedKey }) => {
   const handleClick = () => {
     // Create a new list of contacts with the updated liked status
     const updatedContacts = availableContacts.map(contact =>
-      contact.login.uuid === selectedContact.login.uuid
+      contact.uuid === selectedContact.uuid
         ? { ...contact, liked: !contact.liked } // Toggle the liked status
         : contact
     );
 
-    const updatedFilteredContacts = filteredContacts[selectedKey].contacts.map(contact => contact.login.uuid === selectedContact.login.uuid
+    const updatedFilteredContacts = filteredContacts[selectedKey].contacts.map(contact => contact.uuid === selectedContact.uuid
       ? { ...contact, liked: !contact.liked }
       : contact)
 

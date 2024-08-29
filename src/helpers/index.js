@@ -1,22 +1,29 @@
 import { colorPalette } from "../constants"
 import { setFilterContacts } from "../redux/actions"
+import { v4 as uuidv4 } from 'uuid';
 
-export const mapResultWithLetters = (result) => {
-  const contacts = {}
-  result.forEach(contact => {
-    const { name } = contact
-    const { first } = name
-    const letter = first.charAt(0)
-    contacts[letter] ? contacts[letter].contacts.push(contact) : contacts[letter] = {
-      color: colorPalette[getRandomColor(colorPalette)],
-      activeListFilter: false,
-      activeFavoriteFilter:false,
-      contacts: [contact]
+
+export const mapResultWithLetters = (contactsResult) => {
+  const contacts = {};
+  
+  contactsResult.forEach(contact => {
+    const contactWithUuid = { ...contact, uuid: uuidv4() };
+    const letter = contactWithUuid.name.first.charAt(0);
+    
+    if (contacts[letter]) {
+      contacts[letter].contacts.push(contactWithUuid);
+    } else {
+      contacts[letter] = {
+        color: colorPalette[getRandomColor(colorPalette)],
+        activeListFilter: false,
+        activeFavoriteFilter: false,
+        contacts: [contactWithUuid],
+      };
     }
-  })
+  });
 
-  return contacts
-}
+  return contacts;
+};
 
 export const getRandomColor = (colors) => {
   return Math.floor(Math.random() * colors.length);

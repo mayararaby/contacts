@@ -11,11 +11,11 @@ export const DeleteButton = ({ selectedContact, selectedKey }) => {
 
   const handleClick = () => {
     // Create a new list of contacts with the updated liked status
-    const updatedContacts = availableContacts.filter(contact => contact.login.uuid !== selectedContact.login.uuid);
+    const updatedContacts = availableContacts.filter(contact => contact.uuid !== selectedContact.uuid);
     // Dispatch the new contacts list to the Redux store
 
     dispatch(setNewContacts(updatedContacts));
-    const updatedFilteredContacts = filteredContacts[selectedKey].contacts.filter(contact => contact.login.uuid !== selectedContact.login.uuid)
+    const updatedFilteredContacts = filteredContacts[selectedKey].contacts.filter(contact => contact.uuid !== selectedContact.uuid)
 
     const storedContacts = {
       ...filteredContacts,

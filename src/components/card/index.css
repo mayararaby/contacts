@@ -44,7 +44,7 @@
   padding-inline: 30px;
   width: 40px;
   border-radius: 0px 10px 10px 0px;
-  color: var(--main-light-text-color);
+  color: var(--main-dark-text-color);
   z-index: 4;
   display: flex;
   align-items: center;

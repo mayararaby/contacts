@@ -36,11 +36,11 @@ export const CardContact = ({ filteredContacts, sortedCharacters }) => {
                     const { large } = picture;
                     return (
                       <div key={index} className="card=container">
-                        <div className="card-item" key={index}>
+                        <div className="card-item cursor" key={index}>
                           <Card>
                             <CardHeader
                               avatar={
-                                <Avatar sx={{ bgcolor: filteredContacts[character]?.color }} aria-label="recipe">
+                                <Avatar sx={{ bgcolor: filteredContacts[character]?.color , color:"var(--main-dark-text-color)" }} aria-label="recipe">
                                   {first.charAt(0).toUpperCase()}
                                 </Avatar>
                               }
