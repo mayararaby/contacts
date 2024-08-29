@@ -1,6 +1,7 @@
 import { GET_CONTACT_URL } from "../constants/api";
 import axios from 'axios';
-import { setNewContacts } from "../redux/actions";
+import { setFilterContacts, setNewContacts } from "../redux/actions";
+import { mapResultWithLetters } from "../helpers";
 
 export const fetchContacts = async (dispatch) => {
 
@@ -10,6 +11,9 @@ export const fetchContacts = async (dispatch) => {
 
     // Handle the response data
     dispatch(setNewContacts(contacts.data.results))
+    const filteredResult = mapResultWithLetters(contacts.data.results)
+    dispatch(setFilterContacts(filteredResult))
+    
     return contacts.data;
   } catch (error) {
     // Handle errors

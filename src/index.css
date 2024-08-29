@@ -4,7 +4,8 @@
 :root {
   --main-bg-color :#FDDF6F ;
   --secondary-bg-color :#6E9EB4 ;
-  --main-light-text-color: #322D29;  
+  --main-dark-text-color: #322D29;  
+  --main-light-text-color:#ffff;
   --secondary-thumb-color:#f5f5f5
 }
 
@@ -45,4 +46,8 @@ html,body,#root,.App{
   flex-wrap: nowrap;
   height: 100%;
   overflow-x: hidden;
+}
+
+.cursor{
+  cursor: pointer;
 }

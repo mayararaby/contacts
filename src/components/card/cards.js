@@ -9,61 +9,80 @@ import CardMedia from '@mui/material/CardMedia';
 import CardActions from '@mui/material/CardActions';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-import { colorPalette } from "../../constants"
-import { getRandomColor } from "../../helpers" 
-export const CardContact = ({ rows }) => {
+import { CircularProgress } from '@mui/material';
+
+export const CardContact = ({ filteredContacts }) => {
+
+  const sortedCharacters = Object.keys(filteredContacts)
   return (
-    <>
+    <div className="cards-container">
       {
-        rows?.length && rows?.map((row, index) => {
-          const { gender, name, email, phone, picture } = row;
-          const { title, first, last } = name
-
-          const { large } = picture;
+        sortedCharacters.length ? sortedCharacters.map((character, index) => {
           return (
-            <div className="card-item">
-              <Card>
-                <CardHeader
-                  avatar={
-                    <Avatar sx={{ bgcolor: colorPalette[getRandomColor(colorPalette)] }} aria-label="recipe">
-                      {first.charAt(0).toUpperCase()}
-                    </Avatar>
-                  }
-                  title={`${title} ${first} ${last}`}
-                  subheader={<>
-                    {phone}
-                    <Typography variant="body2" color="text.secondary">
-                      {email}
-                    </Typography>
-                  </>}
+            <div className="main-card-container" key={index}>
+              <div className="char-item" style={{backgroundColor:filteredContacts[character].color }}>
+                {character}
+              </div>
+              <div className="cards-items">
+                {
+                  filteredContacts[character].contacts?.map((row, index) => {
+                    const { gender, name, email, phone, picture } = row;
+                    const { title, first, last } = name
 
-                />
-                <CardMedia
-                  component="img"
-                  height="100"
-                  image={large}
-                  alt="Paella dish"
-                  sx={{ objectFit: 'contain' }}
-                />
-                <CardActions disableSpacing>
-                  <div className="actions-card-container">
+                    const { large } = picture;
+                    return (
+                      <div key={index} className="card=container">
+                        <div className="card-item" key={index}>
+                          <Card>
+                            <CardHeader
+                              avatar={
+                                <Avatar sx={{ bgcolor:  filteredContacts[character].color }} aria-label="recipe">
+                                  {first.charAt(0).toUpperCase()}
+                                </Avatar>
+                              }
+                              title={`${title} ${first} ${last}`}
+                              subheader={<>
+                                {phone}
+                                <Typography variant="body2" color="text.secondary">
+                                  {email}
+                                </Typography>
+                              </>}
 
-                    <div>
-                      <LikeButton selectedContact={row} />
-                      <DeleteButton selectedContact={row} />
-                    </div>
-                    <div>
-                      <ChipGender gender={gender} />
-                    </div>
+                            />
+                            <CardMedia
+                              component="img"
+                              height="100"
+                              image={large}
+                              alt="Paella dish"
+                              sx={{ objectFit: 'contain' }}
+                            />
+                            <CardActions disableSpacing>
+                              <div className="actions-card-container">
 
-                  </div>
-                </CardActions>
+                                <div>
+                                  <LikeButton selectedContact={row} selectedKey={character} />
+                                  <DeleteButton selectedContact={row} selectedKey={character} />
+                                </div>
+                                <div>
+                                  <ChipGender gender={gender} />
+                                </div>
 
-              </Card>
+                              </div>
+                            </CardActions>
+
+                          </Card>
+                        </div>
+                      </div>
+                    )
+                  })
+                }
+              </div>
+
             </div>
           )
-        })
+        }) : <CircularProgress color="inherit" />
+
       }
-    </>
+    </div>
   )
 }

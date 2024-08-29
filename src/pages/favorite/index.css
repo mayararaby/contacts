@@ -1,0 +1,29 @@
+.content-contacts-container{
+  height: 90%;
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  overflow: auto;
+}
+
+.content-contacts-container-start{
+  justify-content: flex-start;
+  
+}
+.content-contacts-container-center{
+  justify-content: center;
+
+}
+.favorite-container{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+.favorite-header{
+  font-size: 50px;
+  font-weight: 700;
+  font-family: "Sevillana", cursive;
+  text-decoration: underline;
+}

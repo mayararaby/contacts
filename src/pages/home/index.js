@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 import { CircularProgress } from '@mui/material';
-import { fetchContacts } from '../../services/callContactsService';
 import "./style.css";
 import { HeaderNav } from '../../components/nav/header';
 import { Footer } from '../../components/footer';
@@ -32,10 +31,8 @@ export const Home = () => {
             <div className='loading'>
               <CircularProgress color="inherit" />
             </div>
-          ) : <div className='cards-container'>
+          ) : <div className='sub-container'>
             <button className="home-explore-button" onClick={navigateToContacts}> Explore Contacts</button>
-
-            {/* <CardContact rows={availableContacts} /> */}
           </div>
           }
         </div>
