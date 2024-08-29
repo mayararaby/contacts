@@ -14,6 +14,7 @@ export const contactsReducer = (state = initialState, { type, payload }) => {
       }
 
       case actionTypes.SET_FILTER_CONTACTS:
+        console.log("payload -->", payload)
         return {
           ...state,
           filteredContacts: payload

@@ -10,18 +10,26 @@ import CardActions from '@mui/material/CardActions';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { CircularProgress } from '@mui/material';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
+import { toggleFilter } from "../../helpers"
+import { useDispatch } from "react-redux"
+export const CardContact = ({ filteredContacts, sortedCharacters }) => {
 
-export const CardContact = ({ filteredContacts }) => {
-
-  const sortedCharacters = Object.keys(filteredContacts)
+  const dispatch = useDispatch()
   return (
     <div className="cards-container">
       {
-        sortedCharacters.length ? sortedCharacters.map((character, index) => {
+        sortedCharacters.length? sortedCharacters.map((character, index) => {
           return (
             <div className="main-card-container" key={index}>
-              <div className="char-item" style={{backgroundColor:filteredContacts[character].color }}>
-                {character}
+              <div className="char-item  cursor" style={{ backgroundColor: filteredContacts[character].color }} onClick={() => { toggleFilter(character, filteredContacts, dispatch) }}>
+                <span>
+                  {
+                    filteredContacts[character]?.activeListFilter ? <FilterAltIcon /> : <FilterAltOutlinedIcon />
+                  }
+                </span>
+                <span>{character}</span>
               </div>
               <div className="cards-items">
                 {
@@ -36,7 +44,7 @@ export const CardContact = ({ filteredContacts }) => {
                           <Card>
                             <CardHeader
                               avatar={
-                                <Avatar sx={{ bgcolor:  filteredContacts[character].color }} aria-label="recipe">
+                                <Avatar sx={{ bgcolor: filteredContacts[character].color }} aria-label="recipe">
                                   {first.charAt(0).toUpperCase()}
                                 </Avatar>
                               }
