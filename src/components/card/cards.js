@@ -12,28 +12,40 @@ import Typography from '@mui/material/Typography';
 import { CircularProgress } from '@mui/material';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
-import { toggleFilter } from "../../helpers"
-import { useDispatch } from "react-redux"
+import { toggleContactFilter, toggleFavoriteFilter } from "../../helpers"
+import { useDispatch, useSelector } from "react-redux"
+import { useLocation } from "react-router-dom"
 export const CardContact = ({ filteredContacts, sortedCharacters }) => {
+
+  const availableContacts = useSelector((state) => state.filteredContacts);
+  const location = useLocation();
+  const { pathname } = location
+
 
   const dispatch = useDispatch()
   return (
     <div className="cards-container">
       {
-        sortedCharacters.length? sortedCharacters.map((character, index) => {
+        sortedCharacters.length ? sortedCharacters.map((character, index) => {
           return (
             <div className="main-card-container" key={index}>
-              <div className="char-item  cursor" style={{ backgroundColor: filteredContacts[character].color }} onClick={() => { toggleFilter(character, filteredContacts, dispatch) }}>
-                <span>
+              <div className="char-item  cursor" style={{ backgroundColor: filteredContacts[character]?.color }} onClick={() => { pathname === "/contacts" ? toggleContactFilter(character, availableContacts, dispatch) : toggleFavoriteFilter(character, availableContacts, dispatch) }}>
+                {pathname === "/contacts" ? <span>
                   {
                     filteredContacts[character]?.activeListFilter ? <FilterAltIcon /> : <FilterAltOutlinedIcon />
                   }
                 </span>
+                  :
+                  <span>
+                    {
+                      filteredContacts[character]?.activeFavoriteFilter ? <FilterAltIcon /> : <FilterAltOutlinedIcon />
+                    }
+                  </span>}
                 <span>{character}</span>
               </div>
               <div className="cards-items">
                 {
-                  filteredContacts[character].contacts?.map((row, index) => {
+                  filteredContacts[character]?.contacts?.map((row, index) => {
                     const { gender, name, email, phone, picture } = row;
                     const { title, first, last } = name
 
@@ -44,7 +56,7 @@ export const CardContact = ({ filteredContacts, sortedCharacters }) => {
                           <Card>
                             <CardHeader
                               avatar={
-                                <Avatar sx={{ bgcolor: filteredContacts[character].color }} aria-label="recipe">
+                                <Avatar sx={{ bgcolor: filteredContacts[character]?.color }} aria-label="recipe">
                                   {first.charAt(0).toUpperCase()}
                                 </Avatar>
                               }
@@ -61,7 +73,7 @@ export const CardContact = ({ filteredContacts, sortedCharacters }) => {
                               component="img"
                               height="100"
                               image={large}
-                              alt="Paella dish"
+                              alt={`${title} ${first} ${last}`}
                               sx={{ objectFit: 'contain' }}
                             />
                             <CardActions disableSpacing>
@@ -74,10 +86,8 @@ export const CardContact = ({ filteredContacts, sortedCharacters }) => {
                                 <div>
                                   <ChipGender gender={gender} />
                                 </div>
-
                               </div>
                             </CardActions>
-
                           </Card>
                         </div>
                       </div>
@@ -85,7 +95,6 @@ export const CardContact = ({ filteredContacts, sortedCharacters }) => {
                   })
                 }
               </div>
-
             </div>
           )
         }) : <CircularProgress color="inherit" />

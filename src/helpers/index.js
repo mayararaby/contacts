@@ -10,6 +10,7 @@ export const mapResultWithLetters = (result) => {
     contacts[letter] ? contacts[letter].contacts.push(contact) : contacts[letter] = {
       color: colorPalette[getRandomColor(colorPalette)],
       activeListFilter: false,
+      activeFavoriteFilter:false,
       contacts: [contact]
     }
   })
@@ -32,8 +33,7 @@ export const getLikedContacts = (filteredContacts) => {
   return likedContactsByCategory
 }
 
-export const toggleFilter = (char, filteredContacts,dispatch) => {  
-  console.log("HERE 1" , filteredContacts)
+export const toggleContactFilter = (char, filteredContacts,dispatch) => {  
   const newFilter = {...filteredContacts}
   const updatedFilteredContacts = {
     ...newFilter, [char]: {
@@ -44,12 +44,22 @@ export const toggleFilter = (char, filteredContacts,dispatch) => {
   dispatch(setFilterContacts(updatedFilteredContacts))
 }
 
+export const toggleFavoriteFilter = (char, filteredContacts,dispatch) => {  
+  const newFilter = {...filteredContacts}
+  const updatedFilteredContacts = {
+    ...newFilter, [char]: {
+      ...newFilter[char],
+      activeFavoriteFilter: !newFilter[char].activeFavoriteFilter,
+    }
+  }
+  dispatch(setFilterContacts(updatedFilteredContacts))
+}
 
-export const chooseContactView = (filteredContacts)=>{
+export const chooseContactView = (filteredContacts, keyName)=>{
   let returnedContacts = {}
   const categories =  Object.keys(filteredContacts)
   categories.forEach(charCategory=>{
-    if(filteredContacts[charCategory].activeListFilter) {
+    if(filteredContacts[charCategory][keyName]) {
       returnedContacts = {
         [charCategory] : {...filteredContacts[charCategory]}
       }

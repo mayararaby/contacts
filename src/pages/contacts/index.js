@@ -6,23 +6,23 @@ import { CardContact } from '../../components/card/cards';
 import { useSelector } from 'react-redux';
 import { chooseContactView } from '../../helpers';
 
-export const Contacts = () => {
+export const Contacts = () => {  
   const availableContacts = useSelector((state) => state.filteredContacts);
-  const sortedCharacters = Object.keys(availableContacts)
+  const [categories, setCategories] = useState(availableContacts);
+  const sortedCharacters = Object.keys(categories)
 
-  // const [categories, setCategories] = useState(availableContacts);
 
   useEffect(() => {
-    const filteredCategories = chooseContactView(availableContacts);
-    // setCategories(filteredCategories);
+    const filteredCategories = chooseContactView(availableContacts,"activeListFilter");
+
+    setCategories(filteredCategories);
   }, [availableContacts]);
 
-  // console.log("categories", categories);
   return (
     <div className='body-container'>
       <HeaderNav />
       <div className={`content-contacts-container ${!sortedCharacters.length?"content-contacts-container-center" :""}`}>
-        <CardContact filteredContacts={availableContacts} sortedCharacters={sortedCharacters} />
+        <CardContact filteredContacts={categories} sortedCharacters={sortedCharacters} />
       </div>
       <Footer />
     </div>
