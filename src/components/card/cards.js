@@ -2,7 +2,6 @@ import React from "react"
 import { ChipGender } from "../chip"
 import { LikeButton } from "../favorite"
 import { DeleteButton } from "../delete"
-import "./index.css"
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -10,39 +9,24 @@ import CardActions from '@mui/material/CardActions';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { CircularProgress } from '@mui/material';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
-import { toggleContactFilter, toggleFavoriteFilter } from "../../helpers"
-import { useDispatch, useSelector } from "react-redux"
-import { useLocation } from "react-router-dom"
+import { CharItem } from "./charItem "
+import { useSelector } from "react-redux"
+import "./index.css"
+
 export const CardContact = ({ filteredContacts, sortedCharacters }) => {
-
   const availableContacts = useSelector((state) => state.filteredContacts);
-  const location = useLocation();
-  const { pathname } = location
 
-
-  const dispatch = useDispatch()
   return (
     <div className="cards-container">
       {
         sortedCharacters.length ? sortedCharacters.map((character, index) => {
           return (
             <div className="main-card-container" key={index}>
-              <div className="char-item  cursor" style={{ backgroundColor: filteredContacts[character]?.color }} onClick={() => { pathname === "/contacts" ? toggleContactFilter(character, availableContacts, dispatch) : toggleFavoriteFilter(character, availableContacts, dispatch) }}>
-                {pathname === "/contacts" ? <span>
-                  {
-                    filteredContacts[character]?.activeListFilter ? <FilterAltIcon /> : <FilterAltOutlinedIcon />
-                  }
-                </span>
-                  :
-                  <span>
-                    {
-                      filteredContacts[character]?.activeFavoriteFilter ? <FilterAltIcon /> : <FilterAltOutlinedIcon />
-                    }
-                  </span>}
-                <span>{character}</span>
-              </div>
+              <CharItem
+                character={character}
+                filteredContacts={filteredContacts}
+                availableContacts={availableContacts}
+              />
               <div className="cards-items">
                 {
                   filteredContacts[character]?.contacts?.map((row, index) => {
