@@ -6,7 +6,7 @@ import { Alert } from '@mui/material';
 import { useRegisterContact } from '../../hooks/useRegisterContact';
 import { validationSchema } from '../../constants/form';
 import { accessUserLocation } from '../../helpers';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 export const AddUser = () => {
@@ -42,22 +42,26 @@ export const AddUser = () => {
     }
   };
   const [preview, setPreview] = useState(null);
-
+  const availableContacts = useSelector((state) => state.contacts);
 
   const handleImageChange = (event, setFieldValue) => {
     const file = event.currentTarget.files[0];
-    setFieldValue('picture.large', file);
-    // Set the image preview
+  
     if (file) {
+      // Convert the file to a base64 string to prevent mutation issues
       const reader = new FileReader();
       reader.onloadend = () => {
-        setPreview(reader.result);
+        const base64String = reader.result;
+        setFieldValue('picture.large', base64String);
+        setPreview(base64String);
       };
       reader.readAsDataURL(file);
     } else {
+      setFieldValue('picture.large', null);
       setPreview(null);
     }
   };
+  
 
 
   const handleLocationClick = (setFieldValue) => {
@@ -71,12 +75,12 @@ export const AddUser = () => {
   const onSubmit = (values, { setSubmitting }) => {
     setSubmitting(false);
     console.log("values ==>", values)
-    setUserContact({...values, type:"add", dispatch, navigate})
+    setUserContact({data:values, type:"add", dispatch, navigate, availableContacts})
   };
 
   return (
     <div className='user-card-info-add'>
-      <div className='user-card-info-container'>
+      <div className='user-card-info-container user-card-info-container-form'>
         <div className='user-card-image-header'>
           Create New Contact
         </div>

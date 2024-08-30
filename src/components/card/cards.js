@@ -41,9 +41,10 @@ export const CardContact = ({ filteredContacts, sortedCharacters }) => {
                     const { large } = picture;
                     return (
                       <div key={index} className="card=container">
-                        <div className="card-item cursor" key={index} onClick={() => { navigateToCard(uuid) }}>
+                        <div className="card-item cursor" key={index}>
                           <Card>
                             <CardHeader
+                              onClick={() => { navigateToCard(uuid) }}
                               avatar={
                                 <Avatar sx={{ bgcolor: filteredContacts[character]?.color, color: "var(--main-dark-text-color)" }} aria-label="recipe">
                                   {first.charAt(0).toUpperCase()}
@@ -62,6 +63,7 @@ export const CardContact = ({ filteredContacts, sortedCharacters }) => {
                               image={large}
                               alt={`${title} ${first} ${last}`}
                               sx={{ objectFit: 'contain' }}
+                              onClick={() => { navigateToCard(uuid) }}
                             />
                             <CardActions disableSpacing>
                               <div className="actions-card-container">

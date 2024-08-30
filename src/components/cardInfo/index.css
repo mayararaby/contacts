@@ -20,15 +20,15 @@
   flex-direction: column;
   gap: 5px;
   background-color: var(--main-light-text-color);
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14),
-    0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   border-radius: 4px;
   transition: all 235ms ease-in-out;
   padding: 15px;
-  /* min-width: 400px; */
 }
-
+.user-card-info-container-form{
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+  0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+  0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+}
 .user-cad-menu-icon {
   display: flex;
   justify-content: flex-end;

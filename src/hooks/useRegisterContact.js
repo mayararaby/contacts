@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
-import { setNewContact } from "../redux/actions";
+import { setFilterContacts, setNewContact, setNewContacts } from "../redux/actions";
+import { mapResultWithLetters } from "../helpers";
 
 export const useRegisterContact = (initialContact = {}) => {
   const [userContact, setUserContact] = useState(initialContact);
@@ -16,8 +17,14 @@ export const useRegisterContact = (initialContact = {}) => {
   },[userContact])
 
   const handleNewContact = ()=>{
-    const {dispatch , navigate} = userContact
-    dispatch(setNewContact({...userContact,uuid: uuidv4() }))
+    const {dispatch , navigate,availableContacts} = userContact
+    const newContacts = [...availableContacts ,{...userContact.data,uuid: uuidv4() } ]
+   
+    dispatch(setNewContacts(newContacts))
+    const filteredResult = mapResultWithLetters(newContacts)
+    dispatch(setFilterContacts(filteredResult))
+
+    console.log({newContacts},"<= hook")
     navigate("/contacts")
 
   }
