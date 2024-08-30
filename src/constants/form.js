@@ -9,7 +9,7 @@ export const validationSchema = Yup.object({
   }),
   location: Yup.object({
     street: Yup.object({
-      number: Yup.string().required('Street number is required'),
+      number: Yup.number().required('Street number is required'),
       name: Yup.string().required('Street name is required'),
     }),
     city: Yup.string().required('City is required'),

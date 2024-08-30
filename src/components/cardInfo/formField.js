@@ -7,7 +7,6 @@ const FormField = ({ label, name, type = 'text', className = '', hasError, value
   <div className={`form-field ${className}`}>
     <label className="input-label">{label}</label>
     <Field
-      // value={value}
       disabled={disabled}
       type={type}
       name={name}

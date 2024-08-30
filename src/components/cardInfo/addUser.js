@@ -76,7 +76,7 @@ console.log({selectedContact})
   const onSubmit = (values, { setSubmitting }) => {
     setSubmitting(false);
     console.log("values ==>", values)
-    setUserContact({data:values, uuid:selectedContact.uuid,type:selectedContact?"edit":"add", dispatch, navigate, availableContacts})
+    setUserContact({data:values, uuid:selectedContact?.uuid,type:selectedContact?"edit":"add", dispatch, navigate, availableContacts})
   };
 
   return (
@@ -187,7 +187,7 @@ console.log({selectedContact})
                   <div>
                     <FormField label="Street Number" name="location.street.number"
                       value={initialValues.location.street.number}
-                      hasError={errors?.location?.street?.number} type="text" />
+                      hasError={errors?.location?.street?.number} type="number" />
                   </div>
 
                   <div>

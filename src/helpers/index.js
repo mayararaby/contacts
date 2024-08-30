@@ -5,7 +5,7 @@ export const mapResultWithLetters = (contactsResult) => {
   const contacts = {};
   
   contactsResult.forEach(contact => {
-    const letter = contact.name.first.charAt(0);
+    const letter = contact.name.first.charAt(0).toUpperCase();
     
     if (contacts[letter]) {
       contacts[letter].contacts.push(contact);
