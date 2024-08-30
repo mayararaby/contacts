@@ -22,7 +22,7 @@ export const CardInfo = ({ selectedContact }) => {
 
   if (!selectedContact || !Object.keys(selectedContact).length) return null;
 
-  const { picture, name, email, phone, gender, location } = selectedContact
+  const { picture, name, email, phone, gender, location , uuid } = selectedContact
   const { city, state, street, country } = location
   const { first, last, title } = name
 
@@ -55,7 +55,7 @@ export const CardInfo = ({ selectedContact }) => {
         }
         <div className='user-card-actions-container'>
           <LikeButton selectedContact={selectedContact} selectedKey={first.charAt(0)} />
-          <EditButton selectedContact={selectedContact} selectedKey={first.charAt(0)} />
+          <EditButton selectedContact={selectedContact} uuid={uuid} selectedKey={first.charAt(0)} />
           <DeleteButton selectedContact={selectedContact} selectedKey={first.charAt(0)} />
         </div>
       </div>

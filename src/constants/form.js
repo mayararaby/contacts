@@ -21,7 +21,7 @@ export const validationSchema = Yup.object({
     })
   }),
   email: Yup.string().email('Invalid email address').required('Email is required'),
-  phone: Yup.number().required('Phone number is required').integer(),
+  phone: Yup.string().required('Phone number is required').matches(/^[0-9]+$/, 'Phone number must be only digits'),
   picture: Yup.object({
     large: Yup.string().required('Image is required'),
   }),

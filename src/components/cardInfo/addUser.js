@@ -9,39 +9,41 @@ import { accessUserLocation } from '../../helpers';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-export const AddUser = () => {
+export const UserDataActions = ({selectedContact}) => {
   const { setUserContact } = useRegisterContact()
   const dispatch =useDispatch()
   const navigate = useNavigate();
-
+console.log({selectedContact})
 
   const initialValues = {
-    gender: '',
+    gender:selectedContact?.gender|| '',
     name: {
-      title: '',
-      first: '',
-      last: ''
+      title: selectedContact?.name?.title ||'',
+      first: selectedContact?.name?.first ||'',
+      last: selectedContact?.name?.last ||''
     },
     location: {
       street: {
-        number: '',
-        name: ''
+        number: selectedContact?.location?.street?.number ||'',
+        name:selectedContact?.location?.street?.name || ''
       },
-      city: '',
-      state: '',
-      country: '',
+      city:selectedContact?.location?.city|| '',
+      state:selectedContact?.location?.state || '',
+      country:selectedContact?.location?.country|| '',
       coordinates: {
-        latitude: "",
-        longitude: ""
+        latitude: selectedContact?.location?.coordinates?.latitude ||"",
+        longitude: selectedContact?.location?.coordinates?.longitude ||""
       },
     },
-    email: '',
-    phone: '',
+    email: selectedContact?.email ||'',
+    phone: selectedContact?.phone ||'',
     picture: {
-      large: ''
+      large: selectedContact?.picture?.large || ''
     }
   };
-  const [preview, setPreview] = useState(null);
+  console.log({initialValues})
+  console.log({phone:selectedContact?.phone||""},selectedContact?.phone)
+  const [preview, setPreview] = useState(selectedContact?.picture.large );
   const availableContacts = useSelector((state) => state.contacts);
 
   const handleImageChange = (event, setFieldValue) => {
@@ -63,7 +65,6 @@ export const AddUser = () => {
   };
   
 
-
   const handleLocationClick = (setFieldValue) => {
     accessUserLocation(({ latitude, longitude }) => {
       setFieldValue('location.coordinates.latitude', latitude);
@@ -75,7 +76,7 @@ export const AddUser = () => {
   const onSubmit = (values, { setSubmitting }) => {
     setSubmitting(false);
     console.log("values ==>", values)
-    setUserContact({data:values, type:"add", dispatch, navigate, availableContacts})
+    setUserContact({data:values, uuid:selectedContact.uuid,type:selectedContact?"edit":"add", dispatch, navigate, availableContacts})
   };
 
   return (
@@ -138,7 +139,13 @@ export const AddUser = () => {
                         <span>Ms</span>
                         <span> <Field type="radio" name="name.title" value="Ms" /> </span>
                       </span>
+
+                      <span className='gender-form-item'>
+                        <span>Miss</span>
+                        <span> <Field type="radio" name="name.title" value="Miss" /> </span>
+                      </span>
                     </div>
+                    
 
                     <ErrorMessage name={"name.title"} className=''>
                       {msg => (
@@ -149,7 +156,7 @@ export const AddUser = () => {
 
                   <div>
                     <FormField label="Phone" name="phone"
-                      value={initialValues.phone} type="number" hasError={errors?.phone} />
+                      value={initialValues.phone} type="text" hasError={errors?.phone} />
                   </div>
 
                   <div>

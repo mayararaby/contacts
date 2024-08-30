@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { fetchContacts } from './services/callContactsService';
 import { FavoriteList } from './pages/favorite';
 import { AddContact } from './pages/add';
+import { EditContact } from './pages/edit';
 
 function App() {
   const dispatch = useDispatch();
@@ -24,10 +25,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/contact/:uuid" element={<ContactInfo />} />
+          <Route path="/edit/:uuid" element={<EditContact />} />
           <Route path="/myFavorite" element={<FavoriteList />} />
           <Route path="/add" element={<AddContact />} />
           <Route path="/*" element={<Error />} />
-
         </Routes>
       </Router>
     </div>
