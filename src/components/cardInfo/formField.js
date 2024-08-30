@@ -1,11 +1,12 @@
 import React from 'react';
 import { Field, ErrorMessage } from 'formik';
 import { Alert } from '@mui/material';
+import EmergencyIcon from '@mui/icons-material/Emergency';
 
-const FormField = ({ label, name, type = 'text', className = '', hasError, value,disabled=false }) => (
+const FormField = ({ label, name, type = 'text', className = '', hasError, value, disabled = false }) => (
 
   <div className={`form-field ${className}`}>
-    <label className="input-label">{label}</label>
+    <div className='field-label-container'> <label className="input-label">{label}</label> <span><EmergencyIcon sx={{ color: "var(--error-color)" }} /></span></div>
     <Field
       disabled={disabled}
       type={type}

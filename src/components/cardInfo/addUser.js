@@ -8,47 +8,46 @@ import { validationSchema } from '../../constants/form';
 import { accessUserLocation } from '../../helpers';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import EmergencyIcon from '@mui/icons-material/Emergency';
 
-export const UserDataActions = ({selectedContact}) => {
+export const UserDataActions = ({ selectedContact }) => {
   const { setUserContact } = useRegisterContact()
-  const dispatch =useDispatch()
+  const dispatch = useDispatch()
   const navigate = useNavigate();
-console.log({selectedContact})
 
   const initialValues = {
-    gender:selectedContact?.gender|| '',
+    gender: selectedContact?.gender || '',
     name: {
-      title: selectedContact?.name?.title ||'',
-      first: selectedContact?.name?.first ||'',
-      last: selectedContact?.name?.last ||''
+      title: selectedContact?.name?.title || '',
+      first: selectedContact?.name?.first || '',
+      last: selectedContact?.name?.last || ''
     },
     location: {
       street: {
-        number: selectedContact?.location?.street?.number ||'',
-        name:selectedContact?.location?.street?.name || ''
+        number: selectedContact?.location?.street?.number || '',
+        name: selectedContact?.location?.street?.name || ''
       },
-      city:selectedContact?.location?.city|| '',
-      state:selectedContact?.location?.state || '',
-      country:selectedContact?.location?.country|| '',
+      city: selectedContact?.location?.city || '',
+      state: selectedContact?.location?.state || '',
+      country: selectedContact?.location?.country || '',
       coordinates: {
-        latitude: selectedContact?.location?.coordinates?.latitude ||"",
-        longitude: selectedContact?.location?.coordinates?.longitude ||""
+        latitude: selectedContact?.location?.coordinates?.latitude || "",
+        longitude: selectedContact?.location?.coordinates?.longitude || ""
       },
     },
-    email: selectedContact?.email ||'',
-    phone: selectedContact?.phone ||'',
+    email: selectedContact?.email || '',
+    phone: selectedContact?.phone || '',
     picture: {
       large: selectedContact?.picture?.large || ''
     }
   };
-  console.log({initialValues})
-  console.log({phone:selectedContact?.phone||""},selectedContact?.phone)
-  const [preview, setPreview] = useState(selectedContact?.picture.large );
+
+  const [preview, setPreview] = useState(selectedContact?.picture.large);
   const availableContacts = useSelector((state) => state.contacts);
 
   const handleImageChange = (event, setFieldValue) => {
     const file = event.currentTarget.files[0];
-  
+
     if (file) {
       // Convert the file to a base64 string to prevent mutation issues
       const reader = new FileReader();
@@ -63,7 +62,7 @@ console.log({selectedContact})
       setPreview(null);
     }
   };
-  
+
 
   const handleLocationClick = (setFieldValue) => {
     accessUserLocation(({ latitude, longitude }) => {
@@ -75,8 +74,7 @@ console.log({selectedContact})
 
   const onSubmit = (values, { setSubmitting }) => {
     setSubmitting(false);
-    console.log("values ==>", values)
-    setUserContact({data:values, uuid:selectedContact?.uuid,type:selectedContact?"edit":"add", dispatch, navigate, availableContacts})
+    setUserContact({ data: values, uuid: selectedContact?.uuid, type: selectedContact ? "edit" : "add", dispatch, navigate, availableContacts })
   };
 
   return (
@@ -106,6 +104,7 @@ console.log({selectedContact})
                       value={initialValues.name.last} type="text" hasError={errors?.name?.last} />
                   </div>
                   <div>
+                    <div className='field-label-container'> <label className="input-label">Profile image</label> <span><EmergencyIcon sx={{ color: "var(--error-color)" }} /></span></div>
                     <Field
                       type={"file"}
                       onChange={(event) => handleImageChange(event, setFieldValue)}
@@ -125,6 +124,8 @@ console.log({selectedContact})
                   </div>
 
                   <div className=''>
+                    <div className='field-label-container'> <label className="input-label">Title</label> <span><EmergencyIcon sx={{ color: "var(--error-color)" }} /></span></div>
+
                     <div className='gender-form-container'>
                       <span className='gender-form-item'>
                         <span>Mr</span>
@@ -145,7 +146,7 @@ console.log({selectedContact})
                         <span> <Field type="radio" name="name.title" value="Miss" /> </span>
                       </span>
                     </div>
-                    
+
 
                     <ErrorMessage name={"name.title"} className=''>
                       {msg => (
@@ -165,6 +166,7 @@ console.log({selectedContact})
                   </div>
 
                   <div className=''>
+                    <div className='field-label-container'> <label className="input-label">Gender</label> <span><EmergencyIcon sx={{ color: "var(--error-color)" }} /></span></div>
                     <div className='gender-form-container'>
                       <span className='gender-form-item'>
                         <span>Male</span>
@@ -220,10 +222,10 @@ console.log({selectedContact})
                       Get Location
                     </div>
 
-                    <FormField label="" name="location.coordinates.longitude"
+                    <FormField label="Longitude" name="location.coordinates.longitude"
                       value={initialValues.location.coordinates.longitude}
                       hasError={errors?.location?.coordinates?.longitude} type="text" disabled={true} />
-                    <FormField label="" name="location.coordinates.latitude"
+                    <FormField label="Latitude" name="location.coordinates.latitude"
                       value={initialValues.location.coordinates.latitude}
                       hasError={errors?.location?.coordinates?.latitude} type="text" disabled={true} />
                   </div>

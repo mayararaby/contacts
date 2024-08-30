@@ -75,12 +75,18 @@
   
 }
 
+.field-label-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
 
 
 
 /* ___________ FormStyle _____________ */
 
-/* Container for the input field */
 .form-field {
   position: relative;
   margin: 16px 0;
@@ -88,18 +94,16 @@
   flex-direction: column;
 }
 
-/* Label styling */
 .input-label {
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: var(--main-dark-text-color);
   margin-bottom: 8px;
 }
 
-/* Input field styling */
 .input-field {
   font-size: 1rem;
   padding: 12px 14px;
-  padding-right: 36px; /* Adjust padding to make space for the error icon */
+  padding-right: 36px; 
   border: 1px solid var(--input-border-color);
   border-radius: 4px;
   outline: none;
@@ -108,7 +112,6 @@
   color: var(--main-dark-text-color);
 }
 
-/* Focus state styling */
 .input-field:focus {
   border-color: var(--main-bg-color);
   box-shadow: 0 0 5px var(--main-bg-color);

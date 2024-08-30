@@ -8,8 +8,8 @@ import IconButton from '@mui/material/IconButton';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { ChipGender } from '../chip'
 import { useNavigate } from 'react-router-dom'
-import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { userLocation } from '../../helpers'
+
 export const CardInfo = ({ selectedContact }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(true)
