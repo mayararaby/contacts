@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import "./index.css"
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import FormField from './formField';
+import FormField from './formikField';
 import { Alert } from '@mui/material';
 import { useRegisterContact } from '../../hooks/useRegisterContact';
 import { validationSchema } from '../../constants/form';
