@@ -15,9 +15,13 @@ export const validationSchema = Yup.object({
     city: Yup.string().required('City is required'),
     state: Yup.string().required('State is required'),
     country: Yup.string().required('Country is required'),
+    coordinates:Yup.object({
+      longitude: Yup.string().required('Longitude is required'),
+      latitude: Yup.string().required('Latitude is required'),
+    })
   }),
   email: Yup.string().email('Invalid email address').required('Email is required'),
-  phone: Yup.string().required('Phone number is required'),
+  phone: Yup.number().required('Phone number is required').integer(),
   picture: Yup.object({
     large: Yup.string().required('Image is required'),
   }),

@@ -5,9 +5,16 @@ import FormField from './formField';
 import { Alert } from '@mui/material';
 import { useRegisterContact } from '../../hooks/useRegisterContact';
 import { validationSchema } from '../../constants/form';
+import { accessUserLocation } from '../../helpers';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 export const AddUser = () => {
   const { setUserContact } = useRegisterContact()
+  const dispatch =useDispatch()
+  const navigate = useNavigate();
+
+
   const initialValues = {
     gender: '',
     name: {
@@ -53,10 +60,18 @@ export const AddUser = () => {
   };
 
 
+  const handleLocationClick = (setFieldValue) => {
+    accessUserLocation(({ latitude, longitude }) => {
+      setFieldValue('location.coordinates.latitude', latitude);
+      setFieldValue('location.coordinates.longitude', longitude);
+    });
+  };
+
+
   const onSubmit = (values, { setSubmitting }) => {
     setSubmitting(false);
     console.log("values ==>", values)
-    setUserContact(values)
+    setUserContact({...values, type:"add", dispatch, navigate})
   };
 
   return (
@@ -101,7 +116,7 @@ export const AddUser = () => {
 
                       )}
                     </ErrorMessage>
-                    <div>{preview && < img className='image-container' src={preview} alt="mayar" />}</div>
+                    <div>{preview && < img className='image-container' src={preview} alt="profile" />}</div>
                   </div>
 
                   <div className=''>
@@ -130,12 +145,12 @@ export const AddUser = () => {
 
                   <div>
                     <FormField label="Phone" name="phone"
-                      value={initialValues.phone} type="text" hasError={errors?.phone} />
+                      value={initialValues.phone} type="number" hasError={errors?.phone} />
                   </div>
 
                   <div>
                     <FormField label="Email" name="email"
-                      value={initialValues.email} type="text" hasError={errors?.email} />
+                      value={initialValues.email} type="email" hasError={errors?.email} />
                   </div>
 
                   <div className=''>
@@ -150,7 +165,7 @@ export const AddUser = () => {
                       </span>
                     </div>
 
-                    <ErrorMessage name={"gender"} className=''>
+                    <ErrorMessage name="gender" className=''>
                       {msg => (
                         <Alert severity="error">{msg}</Alert>
                       )}
@@ -189,7 +204,20 @@ export const AddUser = () => {
                       hasError={errors?.location?.country} type="text" />
                   </div>
 
-                  <button type="submit" disabled={isSubmitting}>
+                  <div>
+                    <div onClick={() => { handleLocationClick(setFieldValue) }} className='sub-theme-button'>
+                      Get Location
+                    </div>
+
+                    <FormField label="" name="location.coordinates.longitude"
+                      value={initialValues.location.coordinates.longitude}
+                      hasError={errors?.location?.coordinates?.longitude} type="text" disabled={true} />
+                    <FormField label="" name="location.coordinates.latitude"
+                      value={initialValues.location.coordinates.latitude}
+                      hasError={errors?.location?.coordinates?.latitude} type="text" disabled={true} />
+                  </div>
+
+                  <button type="submit" className='main-theme-button' disabled={isSubmitting}>
                     Submit
                   </button>
                 </Form>
@@ -197,15 +225,8 @@ export const AddUser = () => {
             </Formik>
           </div>
 
-          <div className='user-info-location cursor'
-          >
-            {/* <span> {`${street.number} ${street.name}, ${city}, ${state}, ${country}`} </span> */}
 
-          </div>
         </div>
-        {/* <div className='user-card-actions-container'>
-
-        </div> */}
       </div>
 
     </div>

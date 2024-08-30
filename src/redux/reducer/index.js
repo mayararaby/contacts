@@ -22,7 +22,7 @@ export const contactsReducer = (state = initialState, { type, payload }) => {
     case actionTypes.SET_NEW_CONTACT:
       return {
         ...state,
-        contacts: [...state.contacts, ...payload]
+        contacts: [...state.contacts, payload]
       }
 
 

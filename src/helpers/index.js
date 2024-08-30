@@ -55,3 +55,20 @@ export const chooseContactView = (filteredContacts, keyName)=>{
 export const userLocation = (location) =>{
   window.open(location, '_blank', 'noopener,noreferrer');
 }
+
+export const accessUserLocation = (callback) => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        callback({ latitude, longitude });
+      },
+      (error) => {
+        console.error('Error retrieving location', error);
+      }
+    );
+  } else {
+    console.error('Geolocation is not supported by this browser.');
+  }
+};

@@ -32,7 +32,7 @@ export const Home = () => {
               <CircularProgress color="inherit" />
             </div>
           ) : <div className='sub-container'>
-            <button className="home-explore-button" onClick={navigateToContacts}> Explore Contacts</button>
+            <button className="main-theme-button" onClick={navigateToContacts}> Explore Contacts</button>
           </div>
           }
         </div>
