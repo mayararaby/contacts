@@ -2,6 +2,7 @@ import { GET_CONTACT_URL } from "../constants/api";
 import axios from 'axios';
 import { setFilterContacts, setNewContacts } from "../redux/actions";
 import { mapResultWithLetters } from "../helpers";
+import { v4 as uuidv4 } from 'uuid';
 
 export const fetchContacts = async (dispatch) => {
 
@@ -10,8 +11,9 @@ export const fetchContacts = async (dispatch) => {
     const contacts = await axios.get(GET_CONTACT_URL);
 
     // Handle the response data
-    dispatch(setNewContacts(contacts.data.results))
-    const filteredResult = mapResultWithLetters(contacts.data.results)
+    const data = contacts.data.results.map(contact=>({...contact, uuid: uuidv4() }))
+    dispatch(setNewContacts(data))
+    const filteredResult = mapResultWithLetters(data)
     dispatch(setFilterContacts(filteredResult))
     
     return contacts.data;

@@ -12,10 +12,15 @@ import { CircularProgress } from '@mui/material';
 import { CharItem } from "./charItem "
 import { useSelector } from "react-redux"
 import "./index.css"
+import { useNavigate } from "react-router-dom";
 
 export const CardContact = ({ filteredContacts, sortedCharacters }) => {
   const availableContacts = useSelector((state) => state.filteredContacts);
+  const navigate = useNavigate();
 
+  const navigateToCard = (uuid) => {
+    navigate(`/contact/${uuid}`)
+  }
   return (
     <div className="cards-container">
       {
@@ -30,27 +35,25 @@ export const CardContact = ({ filteredContacts, sortedCharacters }) => {
               <div className="cards-items">
                 {
                   filteredContacts[character]?.contacts?.map((row, index) => {
-                    const { gender, name, email, phone, picture } = row;
+                    const { gender, name, email, phone, picture, uuid } = row;
                     const { title, first, last } = name
 
                     const { large } = picture;
                     return (
                       <div key={index} className="card=container">
-                        <div className="card-item cursor" key={index}>
+                        <div className="card-item cursor" key={index} onClick={() => { navigateToCard(uuid) }}>
                           <Card>
                             <CardHeader
                               avatar={
-                                <Avatar sx={{ bgcolor: filteredContacts[character]?.color , color:"var(--main-dark-text-color)" }} aria-label="recipe">
+                                <Avatar sx={{ bgcolor: filteredContacts[character]?.color, color: "var(--main-dark-text-color)" }} aria-label="recipe">
                                   {first.charAt(0).toUpperCase()}
                                 </Avatar>
                               }
                               title={`${title} ${first} ${last}`}
-                              subheader={<>
-                                {phone}
-                                <Typography variant="body2" color="text.secondary">
+                              subheader={<> {phone}
+                                <Typography className="break-word" variant="body2" color="text.secondary">
                                   {email}
-                                </Typography>
-                              </>}
+                                </Typography></>}
 
                             />
                             <CardMedia

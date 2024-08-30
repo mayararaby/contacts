@@ -1,23 +1,20 @@
 import { colorPalette } from "../constants"
-import { setFilterContacts } from "../redux/actions"
-import { v4 as uuidv4 } from 'uuid';
 
 
 export const mapResultWithLetters = (contactsResult) => {
   const contacts = {};
   
   contactsResult.forEach(contact => {
-    const contactWithUuid = { ...contact, uuid: uuidv4() };
-    const letter = contactWithUuid.name.first.charAt(0);
+    const letter = contact.name.first.charAt(0);
     
     if (contacts[letter]) {
-      contacts[letter].contacts.push(contactWithUuid);
+      contacts[letter].contacts.push(contact);
     } else {
       contacts[letter] = {
         color: colorPalette[getRandomColor(colorPalette)],
         activeListFilter: false,
         activeFavoriteFilter: false,
-        contacts: [contactWithUuid],
+        contacts: [contact],
       };
     }
   });
@@ -40,27 +37,6 @@ export const getLikedContacts = (filteredContacts) => {
   return likedContactsByCategory
 }
 
-export const toggleContactFilter = (char, filteredContacts,dispatch) => {  
-  const newFilter = {...filteredContacts}
-  const updatedFilteredContacts = {
-    ...newFilter, [char]: {
-      ...newFilter[char],
-      activeListFilter: !newFilter[char].activeListFilter,
-    }
-  }
-  dispatch(setFilterContacts(updatedFilteredContacts))
-}
-
-export const toggleFavoriteFilter = (char, filteredContacts,dispatch) => {  
-  const newFilter = {...filteredContacts}
-  const updatedFilteredContacts = {
-    ...newFilter, [char]: {
-      ...newFilter[char],
-      activeFavoriteFilter: !newFilter[char].activeFavoriteFilter,
-    }
-  }
-  dispatch(setFilterContacts(updatedFilteredContacts))
-}
 
 export const chooseContactView = (filteredContacts, keyName)=>{
   let returnedContacts = {}
@@ -74,4 +50,8 @@ export const chooseContactView = (filteredContacts, keyName)=>{
   })
 
   return Object.keys(returnedContacts).length ? returnedContacts : filteredContacts
+}
+
+export const userLocation = (location) =>{
+  window.open(location, '_blank', 'noopener,noreferrer');
 }

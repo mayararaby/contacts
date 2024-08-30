@@ -14,7 +14,7 @@ export const EditButton = ({ selectedContact }) => {
 
   return (
     <IconButton onClick={handleClick}>
-      <EditIcon sx={{ color: 'var(--main-bg-color)' }}/>
+      <EditIcon sx={{color:"var(--secondary-bg-color) "}} />
     </IconButton>
   );
 };

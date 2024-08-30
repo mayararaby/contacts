@@ -1,0 +1,16 @@
+.card-info-background {
+  display: flex;
+  background-image: url("../../assets/bgMobile.png");
+  align-items: center;
+  justify-content: center;
+  height: 90%;
+  gap: 20px;
+  background-position-x: right;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100%;
+  overflow: auto;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

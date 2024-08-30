@@ -5,7 +5,7 @@ import "./index.css";
 import { CardContact } from '../../components/card/cards';
 import { useSelector } from 'react-redux';
 import { chooseContactView } from '../../helpers';
-
+import { AddNewContactIcon } from '../../components/addIcon';
 export const Contacts = () => {  
   const availableContacts = useSelector((state) => state.filteredContacts);
   const [categories, setCategories] = useState(availableContacts);
@@ -23,6 +23,7 @@ export const Contacts = () => {
       <HeaderNav />
       <div className={`content-contacts-container ${!sortedCharacters.length?"content-contacts-container-center" :""}`}>
         <CardContact filteredContacts={categories} sortedCharacters={sortedCharacters} />
+      <AddNewContactIcon />
       </div>
       <Footer />
     </div>

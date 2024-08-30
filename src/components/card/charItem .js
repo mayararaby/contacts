@@ -1,7 +1,7 @@
 import React from 'react';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
-import { toggleContactFilter, toggleFavoriteFilter } from '../../helpers';
+import { toggleContactFilter, toggleFavoriteFilter } from '../../helpers/characterFilter';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
