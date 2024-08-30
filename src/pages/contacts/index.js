@@ -23,7 +23,7 @@ export const Contacts = () => {
       <HeaderNav />
       <div className={`content-contacts-container ${!sortedCharacters.length?"content-contacts-container-center" :""}`}>
         <CardContact filteredContacts={categories} sortedCharacters={sortedCharacters} />
-      <AddNewContactIcon />
+      <AddNewContactIcon filteredContacts={categories}  sortedCharacters={sortedCharacters} s/>
       </div>
       <Footer />
     </div>

@@ -4,16 +4,18 @@ import { Footer } from '../../components/footer'
 
 export const Error = () => {
   return (
-    <div>
+    <>
       <div className='body-container'>
         <HeaderNav />
 
-        <div className='content-container'>
-        Error
+        <div className={`content-contacts-container content-container content-contacts-container-center`}>
+          <div className='header-container-title '>
+            404 Not found
+          </div>
         </div>
         <Footer />
 
       </div>
-    </div>
+    </>
   )
 }

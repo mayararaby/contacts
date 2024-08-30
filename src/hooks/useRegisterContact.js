@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
-import { setFilterContacts, setNewContact, setNewContacts } from "../redux/actions";
+import { setFilterContacts, setNewContacts } from "../redux/actions";
 import { mapResultWithLetters } from "../helpers";
 
 export const useRegisterContact = (initialContact = {}) => {

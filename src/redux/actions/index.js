@@ -9,8 +9,3 @@ export const setFilterContacts = (contacts) => ({
   type: actionsType.SET_FILTER_CONTACTS,
   payload: contacts
 })
-
-export const setNewContact = (contact) => ({
-  type: actionsType.SET_NEW_CONTACT,
-  payload: contact
-})

@@ -2,46 +2,51 @@
 @import url('https://fonts.googleapis.com/css2?family=Sevillana&display=swap');
 
 :root {
-  --main-bg-color :#FDDF6F ;
-  --secondary-bg-color :#6E9EB4 ;
-  --main-dark-text-color: #322D29;  
-  --main-light-text-color:#ffff;
-  --secondary-thumb-color:#f5f5f5;
+  --main-bg-color: #FDDF6F;
+  --secondary-bg-color: #6E9EB4;
+  --main-dark-text-color: #322D29;
+  --main-light-text-color: #ffff;
+  --secondary-thumb-color: #f5f5f5;
   --error-color: #f44336;
-  --input-bg-color:#f9f9f9;
-  --input-border-color:#ccc
+  --input-bg-color: #f9f9f9;
+  --input-border-color: #ccc
 }
 
-body{
+body {
   margin: 0px;
   padding: 0px;
   font-family: "Roboto", sans-serif;
 }
 
 html {
-  scrollbar-width: thin; 
-  scrollbar-color: var(--main-bg-color) var(--main-secondary-thumb-color) ; 
+  scrollbar-width: thin;
+  scrollbar-color: var(--main-bg-color) var(--main-secondary-thumb-color);
 }
 
 a {
-  color: var(--secondary-bg-color) 
+  color: var(--secondary-bg-color)
 }
-html,body,#root,.App{
+
+html,
+body,
+#root,
+.App {
   height: 100%;
 }
+
 ::-webkit-scrollbar {
-  width: 8px; 
-  height: 8px; 
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--main-bg-color );
-  border-radius: 4px; 
+  background-color: var(--main-bg-color);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: var(--main-secondary-thumb-color); 
-  border-radius: 4px; 
+  background-color: var(--main-secondary-thumb-color);
+  border-radius: 4px;
 }
 
 .body-container {
@@ -54,19 +59,19 @@ html,body,#root,.App{
   overflow-x: hidden;
 }
 
-.cursor{
+.cursor {
   cursor: pointer;
 }
 
-.break-word{
+.break-word {
   word-break: break-word;
 }
 
-svg{
+svg {
   font-size: 20px;
 }
 
-input[type="radio"]{
+input[type="radio"] {
   width: 20px;
   height: 20px;
 }
@@ -99,9 +104,11 @@ input[type="radio"]{
   box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
 }
 
-.sub-theme-button{
-  /* border: none; */
-  /* background-color: transparent; */
+.sub-theme-button {
   padding: 0.75rem;
+}
 
+.header-container-title {
+  font-size: 50px;
+  font-weight: 600;
 }

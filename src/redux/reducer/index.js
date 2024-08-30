@@ -18,13 +18,6 @@ export const contactsReducer = (state = initialState, { type, payload }) => {
           ...state,
           filteredContacts: payload
         }
-  
-    case actionTypes.SET_NEW_CONTACT:
-      return {
-        ...state,
-        contacts: [...state.contacts, payload]
-      }
-
 
     default:
       return state
