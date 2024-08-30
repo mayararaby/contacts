@@ -30,7 +30,7 @@ export const FavoriteList = () => {
           No favorite contacts
         </div>
         }
-        <AddNewContactIcon  filteredContacts={categories}  sortedCharacters={sortedCharacters} />
+        <AddNewContactIcon  filteredContacts={availableContacts}  sortedCharacters={sortedCharacters} />
       </div>
       <Footer />
 
