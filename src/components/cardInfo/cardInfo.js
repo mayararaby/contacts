@@ -47,9 +47,6 @@ export const CardInfo = ({ selectedContact }) => {
             <div>{email}</div>
             <div className='user-info-location cursor' onClick={()=>(userLocation(`https://www.google.com/maps?q=${location.coordinates.latitude},${location.coordinates.longitude}`))}>
               <span> {`${street.number} ${street.name}, ${city}, ${state}, ${country}`} </span>
-              <IconButton>
-                < LocationOnIcon sx={{color:"var(--secondary-bg-color) "}} />
-              </IconButton>
             </div>
           </div> : ""
         }

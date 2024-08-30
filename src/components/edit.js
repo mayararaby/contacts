@@ -12,7 +12,7 @@ export const EditButton = ({ uuid }) => {
 
   return (
     <IconButton onClick={handleClick}>
-      <EditIcon sx={{color:"var(--secondary-bg-color) "}} />
+      <EditIcon  />
     </IconButton>
   );
 };
