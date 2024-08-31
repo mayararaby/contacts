@@ -2,7 +2,6 @@ import React from "react"
 import "./index.css"
 /**
  * @module Footer
- * @description 
  * @returns {JSX}
  */
 export const Footer = ()=>{
