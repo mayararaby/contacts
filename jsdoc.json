@@ -19,6 +19,7 @@
 
 		"theme_opts": {
 			"title": "Phony",
+      "static_dir": ["./README-Assets"],
 			"meta": [
 				{
 					"name": "author",

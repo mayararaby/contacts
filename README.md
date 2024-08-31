@@ -15,7 +15,7 @@ Phony is a web application designed to display cards for contact users, providin
   ```bash
   npm run start
   
-- **Generate Documentation**:use the following command:
+- **Generate Documentation**: use the following command:
 
   ```bash
   npm run doc
@@ -26,4 +26,6 @@ Edit contact
 Favorite contacts
 Filter contacts
 
-[![demo]("./README-Assets/home.JPG")]()
+## Demo : [click here](https://contacts-virid-two.vercel.app/)
+
+![demo]("./README-Assets/home.JPG")
