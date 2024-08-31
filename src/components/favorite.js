@@ -10,7 +10,6 @@ export const LikeButton = ({ selectedContact, selectedKey }) => {
   const availableContacts = useSelector((state) => state.contacts);
   const filteredContacts = useSelector((state) => state.filteredContacts);
 
-
   const handleClick = () => {
     // Create a new list of contacts with the updated liked status
     const updatedContacts = availableContacts.map(contact =>

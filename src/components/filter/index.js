@@ -9,7 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { InputField, RadioField } from './field';
 import jp from 'jsonpath';
-import { setDetailedContacts, setFilter } from '../../redux/actions';
+import { setFilter } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { applyContactFilter, getActiveFilterChar, resetObjectValues } from '../../helpers';
@@ -41,7 +41,7 @@ export const FiltersOptions = ({ setOpenFilters, openFilter, type, categories })
 
 
   const characters = Object.keys(filteredContacts)
-  const filteredChar = type === "contacts" ? "activeListFilter" : "activeFavoriteFilter"
+  const filteredChar = type === "contactsList" ? "activeListFilter" : "activeFavoriteFilter"
   const [openNotification, setOpenNotification] = useState(false)
   const [notificationOption, setNotificationOption] = useState({})
   const [inputValue, setValue] = useState({
@@ -62,8 +62,9 @@ export const FiltersOptions = ({ setOpenFilters, openFilter, type, categories })
     },
     email: contactFilter[type]?.email || '',
     phone: contactFilter[type]?.phone || '',
-    char: ''
   })
+  const dispatch = useDispatch();
+
 
   useEffect(() => {
     const activeChar = getActiveFilterChar(filteredContacts, filteredChar);
@@ -71,7 +72,6 @@ export const FiltersOptions = ({ setOpenFilters, openFilter, type, categories })
 
   }, [filteredContacts, filteredChar]);
 
-  const dispatch = useDispatch();
 
 
   const handleInputChange = (e, isSelectField = false) => {
@@ -93,24 +93,24 @@ export const FiltersOptions = ({ setOpenFilters, openFilter, type, categories })
   }
 
   const applyFilter = () => {
+
     dispatch(setFilter({ ...contactFilter, [type]: inputValue }))
-    type === "contacts" ? toggleContactFilter(inputValue.char, filteredContacts, dispatch) : toggleFavoriteFilter(inputValue.char, filteredContacts, dispatch)
-    const findData = applyContactFilter(inputValue, availableContacts, type, dispatch, oldFilteredContacts, filteredChar)
+    const findData = applyContactFilter(inputValue, availableContacts, type, dispatch, oldFilteredContacts, filteredChar, filteredContacts)
     setOpenFilters(!findData)
     setOpenNotification(true)
     let msg = findData ? `Found ${findData} contacts` : "There is no result"
     setNotificationOption({ type: findData ? "success" : "error", msg })
-
   }
 
-  const resetFilter = () => {
-    dispatch(setFilter({ ...contactFilter, [type]: {} }))
-    const oldContacts = _.cloneDeep(oldFilteredContacts);
-    delete oldContacts[type]; 
-    dispatch(setDetailedContacts({ ...oldContacts }))
-    setValue(resetObjectValues(inputValue))
-    type === "contacts" ? toggleContactFilter("", filteredContacts, dispatch) : toggleFavoriteFilter("", filteredContacts, dispatch)
 
+
+  const resetFilter = () => {
+    const oldFilter = _.cloneDeep(contactFilter);
+    delete oldFilter[type]; 
+    dispatch(setFilter(oldFilter))
+    setValue(resetObjectValues(inputValue))
+    setOpenFilters(false)
+    type === "contactsList" ? toggleContactFilter("", filteredContacts, dispatch) : toggleFavoriteFilter("", filteredContacts, dispatch)
   }
 
   const genderOptions = [{ title: "Male", name: "gender", inputName: "male", value: inputValue.gender },
@@ -155,9 +155,9 @@ export const FiltersOptions = ({ setOpenFilters, openFilter, type, categories })
 
           <div className={`form-field`}>
             <label className="input-label">{"Character"}</label>
-            <select className="input-field" onChange={(e) => handleInputChange(e, true)} name='char' id="char" value={inputValue.char}>
-              <option value="" disabled></option>
-              {characters.map((character, index) => (<option key={index} value={character}>
+            <select className="input-field" disabled onChange={(e) => handleInputChange(e, true)} name='char' id="char" value={inputValue.char}>
+              <option value="" disabled>Search will appear here</option>
+              {characters.map((character, index) => (<option disabled key={index} value={character}>
                 {character}
               </option>))}
             </select>

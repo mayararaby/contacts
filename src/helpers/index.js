@@ -1,5 +1,7 @@
 import { colorPalette } from "../constants"
-import { setDetailedContacts } from "../redux/actions";
+import { setFilterContacts } from "../redux/actions";
+import { updateFilterKey } from "./characterFilter";
+import _ from 'lodash';
 
 
 export const mapResultWithLetters = (contactsResult) => {
@@ -27,7 +29,6 @@ export const getRandomColor = (colors) => {
   return Math.floor(Math.random() * colors.length);
 }
 
-
 export const getLikedContacts = (filteredContacts) => {
   let likedContactsByCategory = {}
   Object.keys(filteredContacts).forEach(category => {
@@ -37,7 +38,6 @@ export const getLikedContacts = (filteredContacts) => {
 
   return likedContactsByCategory
 }
-
 
 export const chooseContactView = (filteredContacts, keyName) => {
   let returnedContacts = {}
@@ -74,14 +74,32 @@ export const accessUserLocation = (callback) => {
   }
 };
 
-export const applyContactFilter = (filter, contacts, type, dispatch, oldFilter, filteredChat) => {
-  const filteredContacts = contacts.filter(contact => isMatch(filter, contact));
-  let result = mapResultWithLetters(filteredContacts)
-  const data = { ...oldFilter, [type]: result }
-  dispatch(setDetailedContacts(data))
-  return filteredContacts.length 
-
+export const applyContactFilter = (filter, contacts, type, dispatch, oldFilter, filteredChat, availableContacts) => {
+  let result = contacts.filter(contact => isMatch(filter, contact));
+  return result.length
 };
+
+export const applyFiler = (contacts, filter, type, dispatch, availableContacts) => {
+  let resultOptions = contacts.filter(contact => isMatch(filter, contact));
+  const updateFilterChar = mapResultWithLetters(resultOptions)
+  const filterKey = type === "contactsList" ? "activeListFilter" : "activeFavoriteFilter"
+  const groups = updateFilterKey(filter?.char, updateFilterChar, filterKey)
+  updateSelectedKey(availableContacts, groups, dispatch, filterKey)
+  return groups
+
+}
+
+const updateSelectedKey = (availableContacts, newContacts, dispatch, type) => {
+
+  let cloneAvailableContacts = _.cloneDeep(availableContacts)
+  Object.keys(cloneAvailableContacts).forEach(character => {
+    if (newContacts[character]) cloneAvailableContacts = { ...cloneAvailableContacts, [character]: newContacts[character] }
+    else cloneAvailableContacts={ ...cloneAvailableContacts, [character]: {...cloneAvailableContacts[character] , [type]:false} }
+  })
+
+  dispatch(setFilterContacts(cloneAvailableContacts))
+
+}
 
 
 const isMatch = (filter, contact) => {

@@ -13,7 +13,6 @@ import { EditContact } from './pages/edit';
 function App() {
   const dispatch = useDispatch();
 
-
   useEffect(() => {
     fetchContacts(dispatch);
   }, [dispatch]);
