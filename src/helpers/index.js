@@ -74,10 +74,10 @@ export const accessUserLocation = (callback) => {
   }
 };
 
-export const applyContactFilter = (filter, contacts, type, dispatch, oldFilter) => {  
-
+export const applyContactFilter = (filter, contacts, type, dispatch, oldFilter,filteredChat) => {  
   const filteredContacts = contacts.filter(contact => isMatch(filter, contact));
-  const result = mapResultWithLetters(filteredContacts)
+  let result = mapResultWithLetters(filteredContacts)
+  if(filter.char) result = result[filter.char]
   dispatch(setDetailedContacts({...oldFilter , [type]:result}))
 
 };
@@ -85,7 +85,6 @@ export const applyContactFilter = (filter, contacts, type, dispatch, oldFilter) 
 
 const isMatch = (filter, contact) => {
   return Object.keys(filter).every(key => {
-
     if (typeof filter[key] === 'object' && filter[key] !== null) {
       return isMatch(filter[key], contact[key]);
     }
@@ -110,3 +109,21 @@ export const resetObjectValues = (obj) => {
   }
   return resetObj;
 };
+
+export const getActiveFilterChar = (categories, activeKey)=>{
+let character;
+console.log("categories", categories)
+console.log("activeKey", activeKey)
+
+  Object.keys(categories).forEach(char=>{
+    if(categories[char][activeKey] )
+   {
+    console.log("HEEEREE")
+    character = char
+    console.log("HEEEREE2", character)
+
+   }
+  })
+  console.log("character =", character)
+  return character
+}

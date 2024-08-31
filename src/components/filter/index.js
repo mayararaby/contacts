@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
@@ -12,8 +12,9 @@ import jp from 'jsonpath';
 import { setDetailedContacts, setFilter } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { applyContactFilter, resetObjectValues } from '../../helpers';
+import { applyContactFilter, getActiveFilterChar, resetObjectValues } from '../../helpers';
 import _ from 'lodash';
+import { toggleContactFilter, toggleFavoriteFilter } from '../../helpers/characterFilter';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -30,11 +31,16 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 
 
-export const FiltersOptions = ({ setOpenFilters, openFilter, type }) => {
+export const FiltersOptions = ({ setOpenFilters, openFilter, type, categories }) => {
 
   const contactFilter = useSelector((state) => state.filter);
   const oldFilteredContacts = useSelector((state) => state.detailedContacts);
   const availableContacts = useSelector((state) => state.contacts);
+  const filteredContacts = useSelector((state) => state.filteredContacts);
+
+
+  const characters = Object.keys(filteredContacts)
+  const filteredChat = type === "contacts" ? "activeListFilter" : "activeFavoriteFilter"
 
   const [inputValue, setValue] = useState({
     gender: contactFilter[type]?.gender || '',
@@ -53,15 +59,26 @@ export const FiltersOptions = ({ setOpenFilters, openFilter, type }) => {
       country: contactFilter[type]?.location?.country || '',
     },
     email: contactFilter[type]?.email || '',
-    phone: contactFilter[type]?.phone || ''
+    phone: contactFilter[type]?.phone || '',
+    char: ''
   })
+
+  useEffect(() => {
+    const activeChar = getActiveFilterChar(filteredContacts, filteredChat);
+    if (activeChar) {
+      setValue((prev) => ({ ...prev, char: activeChar }));
+    }
+  }, [filteredContacts, filteredChat]);
+
+
+
   const dispatch = useDispatch();
 
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e, isSelectField = false) => {
     const { name, value, type, id } = e.target
     let path, fieldValue;
-    if (type === "text") {
+    if (type === "text" || isSelectField) {
       path = name
       fieldValue = value
     }
@@ -77,9 +94,13 @@ export const FiltersOptions = ({ setOpenFilters, openFilter, type }) => {
 
   const applyFilter = () => {
     dispatch(setFilter({ ...contactFilter, [type]: inputValue }))
+
+
+    type === "contacts" ? toggleContactFilter(inputValue.char, filteredContacts, dispatch) : toggleFavoriteFilter(inputValue.char, filteredContacts, dispatch)
     setOpenFilters(false)
-    applyContactFilter(inputValue, availableContacts, type, dispatch, oldFilteredContacts)
+    applyContactFilter(inputValue, availableContacts, type, dispatch, oldFilteredContacts, filteredChat)
   }
+
   const resetFilter = () => {
     dispatch(setFilter({ ...contactFilter, [type]: {} }))
     dispatch(setDetailedContacts({ ...oldFilteredContacts, [type]: {} }))
@@ -125,6 +146,17 @@ export const FiltersOptions = ({ setOpenFilters, openFilter, type }) => {
           <InputField type={"text"} label={"City"} value={inputValue.location.city} name={"location.city"} handleInputChange={handleInputChange} />
           <InputField type={"text"} label={"State"} value={inputValue.location.state} name={"location.state"} handleInputChange={handleInputChange} />
           <InputField type={"text"} label={"Country"} value={inputValue.location.country} name={"location.country"} handleInputChange={handleInputChange} />
+
+          <div className={`form-field`}>
+            <label className="input-label">{"Character"}</label>
+            <select className="input-field" onChange={(e) => handleInputChange(e, true)} name='char' id="char" value={inputValue.char}>
+              {characters.map((character, index) => (<option key={index} value={character}>
+                {character}
+              </option>))}
+            </select>
+          </div>
+
+
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={resetFilter}>

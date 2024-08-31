@@ -38,6 +38,7 @@ export const CharItem = ({ character, filteredContacts, availableContacts }) => 
       className="char-item cursor"
       style={{ backgroundColor: getBackgroundColor() }}
       onClick={handleClick}
+      id = {character}
     >
       <span>{renderIcon()}</span>
       <span>{character}</span>

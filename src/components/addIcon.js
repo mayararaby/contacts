@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { FiltersOptions } from "./filter";
 
 
-export const AddNewContactIcon = ({ filteredContacts, sortedCharacters, type }) => {
+export const AddNewContactIcon = ({ filteredContacts, sortedCharacters, type , categories}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [openFilter, setOpenFilters] = React.useState(false);
@@ -67,7 +67,7 @@ export const AddNewContactIcon = ({ filteredContacts, sortedCharacters, type }) 
         </SpeedDial>
 
       </Box>
-      <FiltersOptions setOpenFilters={setOpenFilters} openFilter={openFilter} type={type} />
+      <FiltersOptions setOpenFilters={setOpenFilters} openFilter={openFilter} type={type} categories={categories} />
     </>
   );
 }
