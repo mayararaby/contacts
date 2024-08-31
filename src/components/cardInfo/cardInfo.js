@@ -10,6 +10,11 @@ import { ChipGender } from '../chip'
 import { useNavigate } from 'react-router-dom'
 import { userLocation } from '../../helpers'
 
+/**
+ * @module CardInfo
+ * @param {*} param0 
+ * @returns {JSX}
+ */
 export const CardInfo = ({ selectedContact }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(true)

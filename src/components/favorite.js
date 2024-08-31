@@ -5,11 +5,20 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilterContacts, setNewContacts } from '../redux/actions';
 
+/**
+ * @module Favorite
+ * @description add to favorite
+ * @param {*} param0 
+ * @returns {JSX}
+ */
 export const LikeButton = ({ selectedContact, selectedKey }) => {
   const dispatch = useDispatch();
   const availableContacts = useSelector((state) => state.contacts);
   const filteredContacts = useSelector((state) => state.filteredContacts);
 
+  /**
+   * toggle between like and un like contact
+   */
   const handleClick = () => {
     // Create a new list of contacts with the updated liked status
     const updatedContacts = availableContacts.map(contact =>

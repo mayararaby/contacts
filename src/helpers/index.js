@@ -3,7 +3,11 @@ import { setFilterContacts } from "../redux/actions";
 import { updateFilterKey } from "./characterFilter";
 import _ from 'lodash';
 
-
+/**
+ * @description mapping all names with the same first char at one category
+ * @param {Array} contactsResult 
+ * @returns {Object}
+ */
 export const mapResultWithLetters = (contactsResult) => {
   const contacts = {};
 
@@ -25,10 +29,20 @@ export const mapResultWithLetters = (contactsResult) => {
   return contacts;
 };
 
+/**
+ * @description generate random index to select random color from array
+ * @param {Array} colors 
+ * @returns {Number}
+ */
 export const getRandomColor = (colors) => {
   return Math.floor(Math.random() * colors.length);
 }
 
+/**
+ * @description get all liked contacts in the categories
+ * @param {Object} filteredContacts 
+ * @returns {Object} Liked contacts in category
+ */
 export const getLikedContacts = (filteredContacts) => {
   let likedContactsByCategory = {}
   Object.keys(filteredContacts).forEach(category => {
@@ -39,6 +53,12 @@ export const getLikedContacts = (filteredContacts) => {
   return likedContactsByCategory
 }
 
+/**
+ * @description choose display all categories or display just char category filter
+ * @param {Object} filteredContacts contact categories
+ * @param {String} keyName to determine if its favorite filter or contacts filter
+ * @returns {Object}
+ */
 export const chooseContactView = (filteredContacts, keyName) => {
   let returnedContacts = {}
   const categories = Object.keys(filteredContacts)
@@ -53,10 +73,18 @@ export const chooseContactView = (filteredContacts, keyName) => {
   return Object.keys(returnedContacts).length ? returnedContacts : filteredContacts
 }
 
+/**
+ * @description open google map url with use [x , y]
+ * @param {url} location 
+ */
 export const userLocation = (location) => {
   window.open(location, '_blank', 'noopener,noreferrer');
 }
 
+/**
+ * @description get current position [x,y] from user browser
+ * @param {Function} callback 
+ */
 export const accessUserLocation = (callback) => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
@@ -74,11 +102,27 @@ export const accessUserLocation = (callback) => {
   }
 };
 
-export const applyContactFilter = (filter, contacts, type, dispatch, oldFilter, filteredChat, availableContacts) => {
+/**
+ * @description get number of filtered data
+ * @param {Object} filter selected filter 
+ * @param {Array} contacts current contacts  
+ * @param {Object} availableContacts 
+ * @returns {Number} length of result of filter
+ */
+export const applyContactFilter = (filter, contacts) => {
   let result = contacts.filter(contact => isMatch(filter, contact));
   return result.length
 };
 
+/**
+ * @description filter current categories
+ * @param {Array} contacts current contacts
+ * @param {Object} filter selected filter 
+ * @param {String} type page type to separate pages filter
+ * @param {Function} dispatch 
+ * @param {Object} availableContacts 
+ * @returns {Object} filtered catagories
+ */
 export const applyFiler = (contacts, filter, type, dispatch, availableContacts) => {
   let resultOptions = contacts.filter(contact => isMatch(filter, contact));
   const updateFilterChar = mapResultWithLetters(resultOptions)
@@ -89,6 +133,13 @@ export const applyFiler = (contacts, filter, type, dispatch, availableContacts) 
 
 }
 
+/**
+ * @description update character filter with filters
+ * @param {Object} availableContacts current categories
+ * @param {Object} newContacts new filtered categories
+ * @param {Function} dispatch 
+ * @param {String} type page type
+ */
 const updateSelectedKey = (availableContacts, newContacts, dispatch, type) => {
 
   let cloneAvailableContacts = _.cloneDeep(availableContacts)
@@ -101,7 +152,12 @@ const updateSelectedKey = (availableContacts, newContacts, dispatch, type) => {
 
 }
 
-
+/**
+ * @description recursive function to get nested filter object an contact value
+ * @param {Object} filter selected filter
+ * @param {Object} contact 
+ * @returns {boolean}
+ */
 const isMatch = (filter, contact) => {
   return Object.keys(filter).every(key => {
     if (typeof filter[key] === 'object' && filter[key] !== null && !Array.isArray(filter[key])) {
@@ -114,7 +170,11 @@ const isMatch = (filter, contact) => {
   });
 };
 
-
+/**
+ * @description recursive function to reset filter schema input after reset all filters
+ * @param {Object} obj filter schema input
+ * @returns {Object}
+ */
 export const resetObjectValues = (obj) => {
   const resetObj = {};
   for (const key in obj) {
@@ -127,6 +187,12 @@ export const resetObjectValues = (obj) => {
   return resetObj;
 };
 
+/**
+ * @description get the current active filter on char to update schema filter with it
+ * @param {Object} categories 
+ * @param {String} activeKey 
+ * @returns {String} active char filter
+ */
 export const getActiveFilterChar = (categories, activeKey) => {
   let character;
   Object.keys(categories).forEach(char => {

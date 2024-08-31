@@ -1,4 +1,10 @@
 import React from "react"
+
+/**
+ * @module inputField  
+ * @param {*} param0 
+ * @returns {JSX}
+ */
 export const InputField = ({ label, type, value, name, handleInputChange }) => {
   return (
     <div className={`form-field`}>
@@ -8,6 +14,11 @@ export const InputField = ({ label, type, value, name, handleInputChange }) => {
   )
 }
 
+/**
+ * @module RadioField
+ * @param {*} param0 
+ * @returns {JSX}
+ */
 export const RadioField = ({ label, options , handleInputChange }) => {
   return (
   <div className='radio-field'>

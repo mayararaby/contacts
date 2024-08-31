@@ -4,6 +4,12 @@ import Stack from '@mui/material/Stack';
 import MaleIcon from '@mui/icons-material/Male';
 import FemaleIcon from '@mui/icons-material/Female';
 
+/**
+ * @module Gender
+ * @description display user gender
+ * @param {*} param0 
+ * @returns {JSX}
+ */
 export const ChipGender = ({ gender }) => {
   let chipColor, IconComponent, IconColor;
 
@@ -20,16 +26,16 @@ export const ChipGender = ({ gender }) => {
   return (
     <Stack direction="row" spacing={1}>
       <Chip
-        icon={<IconComponent sx={{ color: IconColor }} />} // Set icon color to white
-        label={gender.charAt(0).toUpperCase() + gender.slice(1)} // Capitalize gender
+        icon={<IconComponent sx={{ color: IconColor }} />}
+        label={gender.charAt(0).toUpperCase() + gender.slice(1)} 
         variant="outlined"
         sx={{
           backgroundColor: chipColor,
           color: IconColor,
-          border: 'none', // Remove border
-          width: 100, // Set fixed width
+          border: 'none', 
+          width: 100, 
           '& .MuiChip-icon': {
-            color: IconColor, // Set icon color to white
+            color: IconColor, 
           },
         }}
       />

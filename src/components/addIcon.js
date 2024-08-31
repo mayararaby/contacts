@@ -12,6 +12,12 @@ import { useDispatch } from "react-redux";
 import { FiltersOptions } from "./filter";
 
 
+/**
+ * @module Menu
+ * @description Menu actions
+ * @param {*} param0 
+ * @returns {JSX}
+ */
 export const AddNewContactIcon = ({ filteredContacts, sortedCharacters, type , categories}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

@@ -14,6 +14,12 @@ import { useSelector } from "react-redux"
 import "./index.css"
 import { useNavigate } from "react-router-dom";
 
+/**
+ * @module Cards
+ * @description returns an array of cards 
+ * @param {*} param0 
+ * @returns {JSX}
+ */
 export const CardContact = ({ filteredContacts, sortedCharacters, filteredCategories }) => {
   const availableContacts = useSelector((state) => state.filteredContacts);
 

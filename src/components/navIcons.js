@@ -8,10 +8,21 @@ import { useLocation } from 'react-router-dom';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 import PeopleIcon from '@mui/icons-material/People';
+
+/**
+ * @module NavbarIcons
+ * @description menu quick actions
+ * @returns {JSX}
+ */
 const ActionMenu = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { pathname } = location
+  /**
+   * @description route to clicked icon
+   * @param {*} route 
+   * @returns {url}
+   */
   const navigator = (route)=> (navigate(route))
 
   return (

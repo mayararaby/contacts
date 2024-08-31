@@ -9,9 +9,3 @@ export const colorPalette = [
   "#A3E4D7",
   "#F5F5F5"
 ];
-export const columnNames = [
-  "Name",
-  "Email",
-  "Gender",
-  "Actions"
-]

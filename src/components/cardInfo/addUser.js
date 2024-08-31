@@ -9,7 +9,12 @@ import { accessUserLocation } from '../../helpers';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import EmergencyIcon from '@mui/icons-material/Emergency';
-
+/**
+ * @module Add
+ * @description form for adding new contact user
+ * @param {*} param0 
+ * @returns {JSX}
+ */
 export const UserDataActions = ({ selectedContact }) => {
   const { setUserContact } = useRegisterContact()
   const dispatch = useDispatch()
@@ -45,6 +50,11 @@ export const UserDataActions = ({ selectedContact }) => {
   const [preview, setPreview] = useState(selectedContact?.picture.large);
   const availableContacts = useSelector((state) => state.contacts);
 
+  /**
+   * @description render image run time to user
+   * @param {*} event 
+   * @param {Function} setFieldValue formik built-in function to set value for field in run time
+   */
   const handleImageChange = (event, setFieldValue) => {
     const file = event.currentTarget.files[0];
 
@@ -64,6 +74,10 @@ export const UserDataActions = ({ selectedContact }) => {
   };
 
 
+  /**
+   * @description Add user location
+   * @param {*} setFieldValue 
+   */
   const handleLocationClick = (setFieldValue) => {
     accessUserLocation(({ latitude, longitude }) => {
       setFieldValue('location.coordinates.latitude', latitude);
@@ -72,6 +86,11 @@ export const UserDataActions = ({ selectedContact }) => {
   };
 
 
+  /**
+   * @description submit form
+   * @param {*} values 
+   * @param {*} param1 
+   */
   const onSubmit = (values, { setSubmitting }) => {
     setSubmitting(false);
     setUserContact({ data: values, uuid: selectedContact?.uuid, type: selectedContact ? "edit" : "add", dispatch, navigate, availableContacts })

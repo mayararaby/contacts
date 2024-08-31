@@ -17,6 +17,9 @@ import _ from 'lodash';
 import { toggleContactFilter, toggleFavoriteFilter } from '../../helpers/characterFilter';
 import { Notification } from '../notification/Notification';
 
+/**
+ * @description react-material built-in function to overwrite styles 
+ */
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
     padding: theme.spacing(2),
@@ -31,7 +34,12 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 
-
+/**
+ * @module Filters
+ * @description render simple form to filter uses with it
+ * @param {*} param0 
+ * @returns {JSX}
+ */
 export const FiltersOptions = ({ setOpenFilters, openFilter, type, categories }) => {
 
   const contactFilter = useSelector((state) => state.filter);
@@ -67,6 +75,7 @@ export const FiltersOptions = ({ setOpenFilters, openFilter, type, categories })
 
 
   useEffect(() => {
+    /** Get selected char from filters */
     const activeChar = getActiveFilterChar(filteredContacts, filteredChar);
     setValue((prev) => ({ ...prev, char: activeChar }));
 
@@ -74,10 +83,16 @@ export const FiltersOptions = ({ setOpenFilters, openFilter, type, categories })
 
 
 
+  /**
+   * @description set the form values 
+   * @param {*} e 
+   * @param {*} isSelectField 
+   */
   const handleInputChange = (e, isSelectField = false) => {
     const { name, value, type, id } = e.target
     let path, fieldValue;
 
+    /** check if its text or select field to get the path */
     if (type === "text" || isSelectField) {
       path = name
       fieldValue = value
@@ -87,15 +102,19 @@ export const FiltersOptions = ({ setOpenFilters, openFilter, type, categories })
       fieldValue = name
     }
 
+    /** get clone from value and using json path assign the new values */
     const newValue = _.cloneDeep(inputValue);
     jp.value(newValue, `$..${path}`, fieldValue);
     setValue(newValue)
   }
 
+  /**
+   * @description save the filters to store based on current page
+   */
   const applyFilter = () => {
 
     dispatch(setFilter({ ...contactFilter, [type]: inputValue }))
-    const findData = applyContactFilter(inputValue, availableContacts, type, dispatch, oldFilteredContacts, filteredChar, filteredContacts)
+    const findData = applyContactFilter(inputValue, availableContacts)
     setOpenFilters(!findData)
     setOpenNotification(true)
     let msg = findData ? `Found ${findData} contacts` : "There is no result"
@@ -103,6 +122,9 @@ export const FiltersOptions = ({ setOpenFilters, openFilter, type, categories })
   }
 
 
+  /**
+   * @description clear all filter
+   */
 
   const resetFilter = () => {
     const oldFilter = _.cloneDeep(contactFilter);
