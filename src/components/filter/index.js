@@ -9,10 +9,10 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { InputField, RadioField } from './field';
 import jp from 'jsonpath';
-import { setFilter } from '../../redux/actions';
+import { setDetailedContacts, setFilter } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { applyContactFilter } from '../../helpers';
+import { applyContactFilter, resetObjectValues } from '../../helpers';
 import _ from 'lodash';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -31,39 +31,41 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 
 export const FiltersOptions = ({ setOpenFilters, openFilter, type }) => {
+
+  const contactFilter = useSelector((state) => state.filter);
+  const oldFilteredContacts = useSelector((state) => state.detailedContacts);
   const availableContacts = useSelector((state) => state.contacts);
+
   const [inputValue, setValue] = useState({
-    gender: '',
+    gender: contactFilter[type]?.gender || '',
     name: {
-      title: '',
-      first: '',
-      last: ''
+      title: contactFilter[type]?.name?.title || '',
+      first: contactFilter[type]?.name?.first || '',
+      last: contactFilter[type]?.name?.last || ''
     },
     location: {
       street: {
-        number: '',
-        name: ''
+        number: contactFilter[type]?.location?.street?.number || '',
+        name: contactFilter[type]?.location?.street?.name || ''
       },
-      city: '',
-      state: '',
-      country: '',
+      city: contactFilter[type]?.location?.city || '',
+      state: contactFilter[type]?.location?.state || '',
+      country: contactFilter[type]?.location?.country || '',
     },
-    email: '',
-    phone: ''
+    email: contactFilter[type]?.email || '',
+    phone: contactFilter[type]?.phone || ''
   })
   const dispatch = useDispatch();
-  const contactFilter = useSelector((state) => state.filter);
-  const oldFilteredContacts = useSelector((state) => state.detailedContacts);
 
 
   const handleInputChange = (e) => {
     const { name, value, type, id } = e.target
     let path, fieldValue;
-    if(type === "text") {
+    if (type === "text") {
       path = name
       fieldValue = value
     }
-    else{
+    else {
       path = id
       fieldValue = name
     }
@@ -74,14 +76,19 @@ export const FiltersOptions = ({ setOpenFilters, openFilter, type }) => {
   }
 
   const applyFilter = () => {
-    dispatch(setFilter({...contactFilter,[type]:inputValue}))
+    dispatch(setFilter({ ...contactFilter, [type]: inputValue }))
     setOpenFilters(false)
-    applyContactFilter(inputValue ,availableContacts, type , dispatch , oldFilteredContacts )
+    applyContactFilter(inputValue, availableContacts, type, dispatch, oldFilteredContacts)
   }
-  const resetFilter = () => dispatch(setFilter({...contactFilter,[type]:{}}))
+  const resetFilter = () => {
+    dispatch(setFilter({ ...contactFilter, [type]: {} }))
+    dispatch(setDetailedContacts({ ...oldFilteredContacts, [type]: {} }))
+    setValue(resetObjectValues(inputValue))
 
-  const genderOptions = [{ title: "Male", name: "gender", inputName:"male" ,value: inputValue.gender },
-  { title: "Female", name: "gender", value: inputValue.gender, inputName:"female" }]
+  }
+
+  const genderOptions = [{ title: "Male", name: "gender", inputName: "male", value: inputValue.gender },
+  { title: "Female", name: "gender", value: inputValue.gender, inputName: "female" }]
 
   return (
     <React.Fragment>
@@ -120,12 +127,13 @@ export const FiltersOptions = ({ setOpenFilters, openFilter, type }) => {
           <InputField type={"text"} label={"Country"} value={inputValue.location.country} name={"location.country"} handleInputChange={handleInputChange} />
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={applyFilter}>
-            Apply Filters
-          </Button>
           <Button autoFocus onClick={resetFilter}>
             Reset Filters
           </Button>
+          <Button autoFocus onClick={applyFilter}>
+            Apply Filters
+          </Button>
+
         </DialogActions>
       </BootstrapDialog>
     </React.Fragment>

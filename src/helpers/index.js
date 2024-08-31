@@ -97,3 +97,16 @@ const isMatch = (filter, contact) => {
     return true;
   });
 };
+
+
+export const resetObjectValues = (obj) => {
+  const resetObj = {};
+  for (const key in obj) {
+    if (typeof obj[key] === 'object' && obj[key] !== null) {
+      resetObj[key] = resetObjectValues(obj[key]); 
+    } else {
+      resetObj[key] = ''; 
+    }
+  }
+  return resetObj;
+};
