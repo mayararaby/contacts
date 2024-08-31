@@ -34,12 +34,14 @@ export const useRegisterContact = (initialContact = {}) => {
    */
   const handleEditContact = ()=>{
     const { dispatch,  availableContacts , uuid,data, navigate} = userContact
+
     const updatedContact = availableContacts.map(contact=>{
       if(contact.uuid === uuid) {
-        contact = data
+        contact = {...contact,...data}
       }
       return contact
     })
+    console.log({updatedContact})
     updateRedux(updatedContact , dispatch, navigate)
 
   }

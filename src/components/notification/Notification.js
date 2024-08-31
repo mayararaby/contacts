@@ -4,7 +4,7 @@ import Alert from '@mui/material/Alert';
 
 /**
  * @module Notification
- * @description display sanckbar notification
+ * @description display snackbar notification
  * @param {*} param0 
  * @returns {JSX}
  */

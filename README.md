@@ -28,4 +28,4 @@ Filter contacts
 
 ## Demo : [click here](https://contacts-virid-two.vercel.app/)
 
-![demo]("./README-Assets/home.JPG")
+![demo](./README-Assets/home.JPG)

@@ -9,6 +9,8 @@ import { accessUserLocation } from '../../helpers';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import EmergencyIcon from '@mui/icons-material/Emergency';
+import { Notification } from '../notification/Notification';
+import { set } from 'lodash';
 /**
  * @module Add
  * @description form for adding new contact user
@@ -19,6 +21,7 @@ export const UserDataActions = ({ selectedContact }) => {
   const { setUserContact } = useRegisterContact()
   const dispatch = useDispatch()
   const navigate = useNavigate();
+  const [openNotification, setOpenNotification] = useState(false)
 
   const initialValues = {
     gender: selectedContact?.gender || '',
@@ -92,8 +95,14 @@ export const UserDataActions = ({ selectedContact }) => {
    * @param {*} param1 
    */
   const onSubmit = (values, { setSubmitting }) => {
-    setSubmitting(false);
-    setUserContact({ data: values, uuid: selectedContact?.uuid, type: selectedContact ? "edit" : "add", dispatch, navigate, availableContacts })
+    console.log({selectedContact})
+    setTimeout(()=>{
+      setSubmitting(false);
+      setUserContact({ data: values, uuid: selectedContact?.uuid, type: selectedContact ? "edit" : "add", dispatch, navigate, availableContacts })
+    },2000)
+
+    setOpenNotification(true)
+
   };
 
   return (
@@ -233,6 +242,7 @@ export const UserDataActions = ({ selectedContact }) => {
 
         </div>
       </div>
+      <Notification type={"success"} open={openNotification} msg={`${selectedContact?"Edited successfully":"Added successfully"}`} close={setOpenNotification} />
 
     </div>
   )
