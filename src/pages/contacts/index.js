@@ -15,12 +15,15 @@ export const Contacts = () => {
   const sortedCharactersFiltered = detailedContacts&& Object.keys(detailedContacts)?.length
 
 
-
   useEffect(() => {
+    console.log("detailedContacts:availableContacts" , detailedContacts,availableContacts)
     const filteredCategories = chooseContactView(sortedCharactersFiltered?detailedContacts:availableContacts,"activeListFilter");
 
+    console.log("VIEW", filteredCategories)
     setCategories(filteredCategories);
   }, [availableContacts, sortedCharactersFiltered, detailedContacts]);
+
+  console.log({categories})
 
   return (
     <div className='body-container'>
@@ -33,3 +36,6 @@ export const Contacts = () => {
     </div>
   );
 }
+
+
+// sortedCharacters.length ? <CardContact filteredContacts={categories} sortedCharacters={sortedCharacters} /> : <div> No available contacts </div>

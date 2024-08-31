@@ -65,12 +65,9 @@ export const FiltersOptions = ({ setOpenFilters, openFilter, type, categories })
 
   useEffect(() => {
     const activeChar = getActiveFilterChar(filteredContacts, filteredChat);
-    if (activeChar) {
-      setValue((prev) => ({ ...prev, char: activeChar }));
-    }
+    setValue((prev) => ({ ...prev, char: activeChar }));
+
   }, [filteredContacts, filteredChat]);
-
-
 
   const dispatch = useDispatch();
 
@@ -78,6 +75,7 @@ export const FiltersOptions = ({ setOpenFilters, openFilter, type, categories })
   const handleInputChange = (e, isSelectField = false) => {
     const { name, value, type, id } = e.target
     let path, fieldValue;
+
     if (type === "text" || isSelectField) {
       path = name
       fieldValue = value
@@ -95,7 +93,6 @@ export const FiltersOptions = ({ setOpenFilters, openFilter, type, categories })
   const applyFilter = () => {
     dispatch(setFilter({ ...contactFilter, [type]: inputValue }))
 
-
     type === "contacts" ? toggleContactFilter(inputValue.char, filteredContacts, dispatch) : toggleFavoriteFilter(inputValue.char, filteredContacts, dispatch)
     setOpenFilters(false)
     applyContactFilter(inputValue, availableContacts, type, dispatch, oldFilteredContacts, filteredChat)
@@ -105,6 +102,7 @@ export const FiltersOptions = ({ setOpenFilters, openFilter, type, categories })
     dispatch(setFilter({ ...contactFilter, [type]: {} }))
     dispatch(setDetailedContacts({ ...oldFilteredContacts, [type]: {} }))
     setValue(resetObjectValues(inputValue))
+    type === "contacts" ? toggleContactFilter("",filteredContacts,dispatch) : toggleFavoriteFilter("",filteredContacts,dispatch)
 
   }
 
@@ -150,6 +148,7 @@ export const FiltersOptions = ({ setOpenFilters, openFilter, type, categories })
           <div className={`form-field`}>
             <label className="input-label">{"Character"}</label>
             <select className="input-field" onChange={(e) => handleInputChange(e, true)} name='char' id="char" value={inputValue.char}>
+              <option value="" disabled></option>
               {characters.map((character, index) => (<option key={index} value={character}>
                 {character}
               </option>))}

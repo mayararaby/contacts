@@ -10,7 +10,7 @@ export const toggleContactFilter = (char, filteredContacts, dispatch) => {
     };
   });
 
-  console.log("updatedFilteredContacts ", newFilter);
+  console.log(" reset contact char is false", newFilter)
   dispatch(setFilterContacts(newFilter));
 };
 
@@ -25,6 +25,5 @@ export const toggleFavoriteFilter = (char, filteredContacts,dispatch) => {
     };
   });
 
-  console.log("updatedFilteredContacts ", newFilter);
   dispatch(setFilterContacts(newFilter));
 }

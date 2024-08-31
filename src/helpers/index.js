@@ -41,6 +41,7 @@ export const getLikedContacts = (filteredContacts) => {
 
 export const chooseContactView = (filteredContacts, keyName) => {
   let returnedContacts = {}
+  console.log({filteredContacts},"<= 1")
   const categories = Object.keys(filteredContacts)
   categories.forEach(charCategory => {
     if (filteredContacts[charCategory][keyName]) {
@@ -50,6 +51,7 @@ export const chooseContactView = (filteredContacts, keyName) => {
     }
   })
 
+  console.log({returnedContacts})
   return Object.keys(returnedContacts).length ? returnedContacts : filteredContacts
 }
 
@@ -76,6 +78,7 @@ export const accessUserLocation = (callback) => {
 
 export const applyContactFilter = (filter, contacts, type, dispatch, oldFilter,filteredChat) => {  
   const filteredContacts = contacts.filter(contact => isMatch(filter, contact));
+  console.log({filteredContacts} , "<=filteredContacts")
   let result = mapResultWithLetters(filteredContacts)
   if(filter.char) result = result[filter.char]
   dispatch(setDetailedContacts({...oldFilter , [type]:result}))
@@ -112,18 +115,8 @@ export const resetObjectValues = (obj) => {
 
 export const getActiveFilterChar = (categories, activeKey)=>{
 let character;
-console.log("categories", categories)
-console.log("activeKey", activeKey)
-
   Object.keys(categories).forEach(char=>{
-    if(categories[char][activeKey] )
-   {
-    console.log("HEEEREE")
-    character = char
-    console.log("HEEEREE2", character)
-
-   }
+    if(categories[char][activeKey] ) character = char
   })
-  console.log("character =", character)
-  return character
+  return character || ""
 }
