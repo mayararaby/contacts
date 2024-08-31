@@ -9,16 +9,19 @@ import { AddNewContactIcon } from '../../components/addIcon'
 export const FavoriteList = () => {
 
   const availableContacts = useSelector((state) => state.filteredContacts);
+  const detailedContacts = useSelector((state) => state.detailedContacts)?.favorite ;
+
   const [categories, setCategories] = useState(availableContacts);
   const sortedCharacters = Object.keys(categories)
+  const sortedCharactersFiltered = detailedContacts&& Object.keys(detailedContacts)?.length
 
 
   useEffect(() => {
-    const filteredCategories = chooseContactView(availableContacts, "activeFavoriteFilter");
+    const filteredCategories = chooseContactView(sortedCharactersFiltered?detailedContacts:availableContacts, "activeFavoriteFilter");
     const likedContacts = getLikedContacts(filteredCategories)
     setCategories(likedContacts);
 
-  }, [availableContacts]);
+  }, [availableContacts, sortedCharactersFiltered, detailedContacts]);
 
 
 

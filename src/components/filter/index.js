@@ -73,21 +73,15 @@ export const FiltersOptions = ({ setOpenFilters, openFilter, type }) => {
     setValue(newValue)
   }
 
-  console.log({inputValue})
   const applyFilter = () => {
     dispatch(setFilter({...contactFilter,[type]:inputValue}))
     setOpenFilters(false)
-    applyContactFilter(inputValue ,availableContacts, type , dispatch , oldFilteredContacts[type] )
+    applyContactFilter(inputValue ,availableContacts, type , dispatch , oldFilteredContacts )
   }
   const resetFilter = () => dispatch(setFilter({...contactFilter,[type]:{}}))
 
   const genderOptions = [{ title: "Male", name: "gender", inputName:"male" ,value: inputValue.gender },
   { title: "Female", name: "gender", value: inputValue.gender, inputName:"female" }]
-  const titleOptions = [
-    { title: "Mr",  inputName:"mr",name: "name.title", value: inputValue.name.title },
-    { title: "Mrs", inputName:"mrs", name: "name.title", value: inputValue.name.title },
-    { title: "Ms", inputName:"ms", name: "name.title", value: inputValue.name.title },
-    { title: "Miss", inputName:"miss", name: "name.title", value: inputValue.name.title }]
 
   return (
     <React.Fragment>

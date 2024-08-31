@@ -13,8 +13,8 @@ export const RadioField = ({ label, options , handleInputChange }) => {
   <div className='radio-field'>
     <label className="input-label">{label}</label>
     <div className='gender-form-container'>
-      {options.map((option => (
-        <span className='gender-form-item'>
+      {options.map(((option,index) => (
+        <span className='gender-form-item' key={`${label}${option.name}${index}`}>
           <span>{option.title}</span>
           <span> <input type="radio"  checked= {option.value === option.inputName} id={option.name}  name={option.inputName} onChange={handleInputChange} /></span>
         </span>

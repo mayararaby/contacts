@@ -6,7 +6,6 @@ import { mapResultWithLetters } from "../helpers";
 export const useRegisterContact = (initialContact = {}) => {
   const [userContact, setUserContact] = useState(initialContact);
 
-  console.log("initialContact ==>", initialContact)
   useEffect(() => {
     if (Object.keys(userContact)?.length) {
       const { type } = userContact
@@ -23,14 +22,12 @@ export const useRegisterContact = (initialContact = {}) => {
 
   const handleEditContact = ()=>{
     const { dispatch,  availableContacts , uuid,data, navigate} = userContact
-    console.log({userContact})
     const updatedContact = availableContacts.map(contact=>{
       if(contact.uuid === uuid) {
         contact = data
       }
       return contact
     })
-    console.log({updatedContact})
     updateRedux(updatedContact , dispatch, navigate)
 
   }

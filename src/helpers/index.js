@@ -77,7 +77,6 @@ export const accessUserLocation = (callback) => {
 export const applyContactFilter = (filter, contacts, type, dispatch, oldFilter) => {  
 
   const filteredContacts = contacts.filter(contact => isMatch(filter, contact));
-  console.log({filteredContacts})
   const result = mapResultWithLetters(filteredContacts)
   dispatch(setDetailedContacts({...oldFilter , [type]:result}))
 
@@ -85,16 +84,12 @@ export const applyContactFilter = (filter, contacts, type, dispatch, oldFilter) 
 
 
 const isMatch = (filter, contact) => {
-  console.log("filter -->", filter)
   return Object.keys(filter).every(key => {
 
     if (typeof filter[key] === 'object' && filter[key] !== null) {
       return isMatch(filter[key], contact[key]);
     }
     if (filter[key] !== '') {
-      console.log("contact -> ", String(contact[key]).toLowerCase().trim())
-      console.log("value -> ", String(filter[key]).toLowerCase().trim())
-
 
       return String(contact[key]).toLowerCase().trim().startsWith(String(filter[key]).toLowerCase().trim());
     }
