@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux';
 import { applyContactFilter, getActiveFilterChar, resetObjectValues } from '../../helpers';
 import _ from 'lodash';
 import { toggleContactFilter, toggleFavoriteFilter } from '../../helpers/characterFilter';
+import { Notification } from '../notification/Notification';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -40,8 +41,9 @@ export const FiltersOptions = ({ setOpenFilters, openFilter, type, categories })
 
 
   const characters = Object.keys(filteredContacts)
-  const filteredChat = type === "contacts" ? "activeListFilter" : "activeFavoriteFilter"
-
+  const filteredChar = type === "contacts" ? "activeListFilter" : "activeFavoriteFilter"
+  const [openNotification, setOpenNotification] = useState(false)
+  const [notificationOption, setNotificationOption] = useState({})
   const [inputValue, setValue] = useState({
     gender: contactFilter[type]?.gender || '',
     name: {
@@ -64,10 +66,10 @@ export const FiltersOptions = ({ setOpenFilters, openFilter, type, categories })
   })
 
   useEffect(() => {
-    const activeChar = getActiveFilterChar(filteredContacts, filteredChat);
+    const activeChar = getActiveFilterChar(filteredContacts, filteredChar);
     setValue((prev) => ({ ...prev, char: activeChar }));
 
-  }, [filteredContacts, filteredChat]);
+  }, [filteredContacts, filteredChar]);
 
   const dispatch = useDispatch();
 
@@ -92,22 +94,28 @@ export const FiltersOptions = ({ setOpenFilters, openFilter, type, categories })
 
   const applyFilter = () => {
     dispatch(setFilter({ ...contactFilter, [type]: inputValue }))
-
     type === "contacts" ? toggleContactFilter(inputValue.char, filteredContacts, dispatch) : toggleFavoriteFilter(inputValue.char, filteredContacts, dispatch)
-    setOpenFilters(false)
-    applyContactFilter(inputValue, availableContacts, type, dispatch, oldFilteredContacts, filteredChat)
+    const findData = applyContactFilter(inputValue, availableContacts, type, dispatch, oldFilteredContacts, filteredChar)
+    setOpenFilters(!findData)
+    setOpenNotification(true)
+    let msg = findData ? `Found ${findData} contacts` : "There is no result"
+    setNotificationOption({ type: findData ? "success" : "error", msg })
+
   }
 
   const resetFilter = () => {
     dispatch(setFilter({ ...contactFilter, [type]: {} }))
-    dispatch(setDetailedContacts({ ...oldFilteredContacts, [type]: {} }))
+    const oldContacts = _.cloneDeep(oldFilteredContacts);
+    delete oldContacts[type]; 
+    dispatch(setDetailedContacts({ ...oldContacts }))
     setValue(resetObjectValues(inputValue))
-    type === "contacts" ? toggleContactFilter("",filteredContacts,dispatch) : toggleFavoriteFilter("",filteredContacts,dispatch)
+    type === "contacts" ? toggleContactFilter("", filteredContacts, dispatch) : toggleFavoriteFilter("", filteredContacts, dispatch)
 
   }
 
   const genderOptions = [{ title: "Male", name: "gender", inputName: "male", value: inputValue.gender },
   { title: "Female", name: "gender", value: inputValue.gender, inputName: "female" }]
+
 
   return (
     <React.Fragment>
@@ -167,6 +175,7 @@ export const FiltersOptions = ({ setOpenFilters, openFilter, type, categories })
 
         </DialogActions>
       </BootstrapDialog>
+      <Notification type={notificationOption.type} open={openNotification} msg={notificationOption.msg} close={setOpenNotification} />
     </React.Fragment>
   );
 }

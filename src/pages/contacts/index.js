@@ -8,6 +8,8 @@ import { chooseContactView } from '../../helpers';
 import { AddNewContactIcon } from '../../components/addIcon';
 export const Contacts = () => {  
   const detailedContacts = useSelector((state) => state.detailedContacts)?.contacts ;
+  const detailedContactsNo = useSelector((state) => state.detailedContacts) ;
+
   const availableContacts = useSelector((state) => state.filteredContacts);
 
   const [categories, setCategories] = useState(availableContacts);
@@ -16,20 +18,17 @@ export const Contacts = () => {
 
 
   useEffect(() => {
-    console.log("detailedContacts:availableContacts" , detailedContacts,availableContacts)
-    const filteredCategories = chooseContactView(sortedCharactersFiltered?detailedContacts:availableContacts,"activeListFilter");
+    const filteredCategories = chooseContactView(detailedContacts?detailedContacts:availableContacts,"activeListFilter");
 
-    console.log("VIEW", filteredCategories)
     setCategories(filteredCategories);
   }, [availableContacts, sortedCharactersFiltered, detailedContacts]);
 
-  console.log({categories})
 
   return (
     <div className='body-container'>
       <HeaderNav />
       <div className={`content-contacts-container ${!sortedCharacters.length?"content-contacts-container-center" :""}`}>
-        <CardContact filteredContacts={categories} sortedCharacters={sortedCharacters} />
+      {sortedCharacters.length?<CardContact filteredContacts={categories} sortedCharacters={sortedCharacters} />:<div className='no-msg'>No result fount</div>}
       <AddNewContactIcon filteredContacts={availableContacts} categories={categories}  sortedCharacters={sortedCharacters} type={"contacts"}/>
       </div>
       <Footer />

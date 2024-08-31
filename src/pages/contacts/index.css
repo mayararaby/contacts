@@ -8,3 +8,8 @@
   gap: 20px;
   overflow: auto;
 }
+
+.no-msg{
+  font-size: 40px;
+  font-weight: 400;
+}

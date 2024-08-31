@@ -11,7 +11,7 @@ export const fetchContacts = async (dispatch) => {
     const contacts = await axios.get(GET_CONTACT_URL);
 
     // Handle the response data
-    const data = contacts.data.results.map(contact=>({...contact, uuid: uuidv4() }))
+    const data = contacts.data.results.map(contact=>({...contact, uuid: uuidv4(), char:contact.name.first.charAt(0) }))
     dispatch(setNewContacts(data))
     const filteredResult = mapResultWithLetters(data)
     dispatch(setFilterContacts(filteredResult))

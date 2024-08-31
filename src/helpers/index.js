@@ -41,7 +41,6 @@ export const getLikedContacts = (filteredContacts) => {
 
 export const chooseContactView = (filteredContacts, keyName) => {
   let returnedContacts = {}
-  console.log({filteredContacts},"<= 1")
   const categories = Object.keys(filteredContacts)
   categories.forEach(charCategory => {
     if (filteredContacts[charCategory][keyName]) {
@@ -51,7 +50,6 @@ export const chooseContactView = (filteredContacts, keyName) => {
     }
   })
 
-  console.log({returnedContacts})
   return Object.keys(returnedContacts).length ? returnedContacts : filteredContacts
 }
 
@@ -76,26 +74,24 @@ export const accessUserLocation = (callback) => {
   }
 };
 
-export const applyContactFilter = (filter, contacts, type, dispatch, oldFilter,filteredChat) => {  
+export const applyContactFilter = (filter, contacts, type, dispatch, oldFilter, filteredChat) => {
   const filteredContacts = contacts.filter(contact => isMatch(filter, contact));
-  console.log({filteredContacts} , "<=filteredContacts")
   let result = mapResultWithLetters(filteredContacts)
-  if(filter.char) result = result[filter.char]
-  dispatch(setDetailedContacts({...oldFilter , [type]:result}))
+  const data = { ...oldFilter, [type]: result }
+  dispatch(setDetailedContacts(data))
+  return filteredContacts.length 
 
 };
 
 
 const isMatch = (filter, contact) => {
   return Object.keys(filter).every(key => {
-    if (typeof filter[key] === 'object' && filter[key] !== null) {
+    if (typeof filter[key] === 'object' && filter[key] !== null && !Array.isArray(filter[key])) {
       return isMatch(filter[key], contact[key]);
     }
     if (filter[key] !== '') {
-
       return String(contact[key]).toLowerCase().trim().startsWith(String(filter[key]).toLowerCase().trim());
     }
-
     return true;
   });
 };
@@ -105,18 +101,18 @@ export const resetObjectValues = (obj) => {
   const resetObj = {};
   for (const key in obj) {
     if (typeof obj[key] === 'object' && obj[key] !== null) {
-      resetObj[key] = resetObjectValues(obj[key]); 
+      resetObj[key] = resetObjectValues(obj[key]);
     } else {
-      resetObj[key] = ''; 
+      resetObj[key] = '';
     }
   }
   return resetObj;
 };
 
-export const getActiveFilterChar = (categories, activeKey)=>{
-let character;
-  Object.keys(categories).forEach(char=>{
-    if(categories[char][activeKey] ) character = char
+export const getActiveFilterChar = (categories, activeKey) => {
+  let character;
+  Object.keys(categories).forEach(char => {
+    if (categories[char][activeKey]) character = char
   })
   return character || ""
 }

@@ -16,7 +16,7 @@ export const useRegisterContact = (initialContact = {}) => {
 
   const handleNewContact = () => {
     const { dispatch, navigate, availableContacts, data } = userContact
-    const newContacts = [...availableContacts, { ...data, uuid: uuidv4() }]
+    const newContacts = [...availableContacts, { ...data, uuid: uuidv4() ,char:data.name.first.charAt(0)}]
     updateRedux(newContacts , dispatch, navigate)
   }
 
