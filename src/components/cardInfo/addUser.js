@@ -95,6 +95,11 @@ export const UserDataActions = ({ selectedContact }) => {
               {({ setFieldValue, isSubmitting, errors }) => (
                 <Form>
                   <div>
+                    <FormField label="Title" name="name.title"
+                      value={initialValues.name.title} type="text" hasError={errors?.name?.title} />
+                  </div>
+
+                  <div>
                     <FormField label="First Name" name="name.first"
                       value={initialValues.name.first} type="text" hasError={errors?.name?.first} />
                   </div>
@@ -121,38 +126,6 @@ export const UserDataActions = ({ selectedContact }) => {
                       )}
                     </ErrorMessage>
                     <div>{preview && < img className='image-container' src={preview} alt="profile" />}</div>
-                  </div>
-
-                  <div className=''>
-                    <div className='field-label-container'> <label className="input-label">Title</label> <span><EmergencyIcon sx={{ color: "var(--error-color)" }} /></span></div>
-
-                    <div className='gender-form-container'>
-                      <span className='gender-form-item'>
-                        <span>Mr</span>
-                        <span> <Field type="radio" name="name.title" value="Mr" /> </span>
-                      </span>
-                      <span className='gender-form-item'>
-                        <span>Mrs</span>
-                        <span> <Field type="radio" name="name.title" value="Mrs" /> </span>
-                      </span>
-
-                      <span className='gender-form-item'>
-                        <span>Ms</span>
-                        <span> <Field type="radio" name="name.title" value="Ms" /> </span>
-                      </span>
-
-                      <span className='gender-form-item'>
-                        <span>Miss</span>
-                        <span> <Field type="radio" name="name.title" value="Miss" /> </span>
-                      </span>
-                    </div>
-
-
-                    <ErrorMessage name={"name.title"} className=''>
-                      {msg => (
-                        <Alert severity="error">{msg}</Alert>
-                      )}
-                    </ErrorMessage>
                   </div>
 
                   <div>

@@ -8,7 +8,7 @@ export const InputField = ({ label, type, value, name, handleInputChange }) => {
   )
 }
 
-export const RadioField = ({ label, options }) => {
+export const RadioField = ({ label, options , handleInputChange }) => {
   return (
   <div className='radio-field'>
     <label className="input-label">{label}</label>
@@ -16,7 +16,7 @@ export const RadioField = ({ label, options }) => {
       {options.map((option => (
         <span className='gender-form-item'>
           <span>{option.title}</span>
-          <span> <input type="radio" name={option.name} value={option.value} /></span>
+          <span> <input type="radio"  checked= {option.value === option.inputName} id={option.name}  name={option.inputName} onChange={handleInputChange} /></span>
         </span>
       )))
       }

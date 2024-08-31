@@ -6,6 +6,17 @@ export const setNewContacts = (contacts) => ({
 })
 
 export const setFilterContacts = (contacts) => ({
-  type: actionsType.SET_FILTER_CONTACTS,
+  type: actionsType.SET_FILTER_CONTACT,
+  payload: contacts
+})
+
+
+export const setFilter = (filter)=>({
+  type: actionsType.SET_FILTER,
+  payload: filter
+})
+
+export const setDetailedContacts =(contacts)=>({
+  type: actionsType.SET_DETAILED_FILTERED_CONTACTS,
   payload: contacts
 })

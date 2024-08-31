@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { FiltersOptions } from "./filter";
 
 
-export const AddNewContactIcon = ({ filteredContacts, sortedCharacters }) => {
+export const AddNewContactIcon = ({ filteredContacts, sortedCharacters, type }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [openFilter, setOpenFilters] = React.useState(false);
@@ -43,7 +43,7 @@ export const AddNewContactIcon = ({ filteredContacts, sortedCharacters }) => {
             '& .MuiFab-primary': {
               backgroundColor: 'var(--main-bg-color)',
               '&:hover': {
-                backgroundColor: 'var(--main-bg-color-dark)' // Darker shade on hover
+                backgroundColor: 'var(--main-bg-color-dark)' 
               }
             }
           }}
@@ -58,7 +58,7 @@ export const AddNewContactIcon = ({ filteredContacts, sortedCharacters }) => {
                 sx={{
                   backgroundColor: 'var(--main-bg-color)',
                   '&:hover': {
-                    backgroundColor: 'var(--main-bg-color-dark)' // Darker shade on hover
+                    backgroundColor: 'var(--main-bg-color-dark)' 
                   }
                 }}
               />
@@ -67,7 +67,7 @@ export const AddNewContactIcon = ({ filteredContacts, sortedCharacters }) => {
         </SpeedDial>
 
       </Box>
-      <FiltersOptions setOpenFilters={setOpenFilters} openFilter={openFilter} />
+      <FiltersOptions setOpenFilters={setOpenFilters} openFilter={openFilter} type={type} />
     </>
   );
 }

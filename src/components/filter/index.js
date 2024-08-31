@@ -9,23 +9,29 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { InputField, RadioField } from './field';
 import jp from 'jsonpath';
+import { setFilter } from '../../redux/actions';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { applyContactFilter } from '../../helpers';
+import _ from 'lodash';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
     padding: theme.spacing(2),
-  
+
   },
   '& .MuiDialogActions-root': {
     padding: theme.spacing(1),
   },
   '& .MuiDialog-paper': {
-    width: '400px', 
+    width: '400px',
   },
 }));
 
 
 
-export const FiltersOptions = ({ setOpenFilters, openFilter }) => {
+export const FiltersOptions = ({ setOpenFilters, openFilter, type }) => {
+  const availableContacts = useSelector((state) => state.contacts);
   const [inputValue, setValue] = useState({
     gender: '',
     name: {
@@ -45,20 +51,43 @@ export const FiltersOptions = ({ setOpenFilters, openFilter }) => {
     email: '',
     phone: ''
   })
+  const dispatch = useDispatch();
+  const contactFilter = useSelector((state) => state.filter);
+  const oldFilteredContacts = useSelector((state) => state.detailedContacts);
+
+
   const handleInputChange = (e) => {
-    const { name, value } = e.target
-    const newValue = { ...inputValue }
-    jp.value(newValue, `$..${name}`, value);
+    const { name, value, type, id } = e.target
+    let path, fieldValue;
+    if(type === "text") {
+      path = name
+      fieldValue = value
+    }
+    else{
+      path = id
+      fieldValue = name
+    }
+
+    const newValue = _.cloneDeep(inputValue);
+    jp.value(newValue, `$..${path}`, fieldValue);
     setValue(newValue)
   }
 
-  const genderOptions =  [{ title: "Male", name: "male", value: inputValue.gender },
-    { title: "Female", name: "female", value: inputValue.gender }]
+  console.log({inputValue})
+  const applyFilter = () => {
+    dispatch(setFilter({...contactFilter,[type]:inputValue}))
+    setOpenFilters(false)
+    applyContactFilter(inputValue ,availableContacts, type , dispatch , oldFilteredContacts[type] )
+  }
+  const resetFilter = () => dispatch(setFilter({...contactFilter,[type]:{}}))
+
+  const genderOptions = [{ title: "Male", name: "gender", inputName:"male" ,value: inputValue.gender },
+  { title: "Female", name: "gender", value: inputValue.gender, inputName:"female" }]
   const titleOptions = [
-    { title: "Mr", name: "name.title", value: inputValue.name.title },
-    { title: "Mrs", name: "name.title", value: inputValue.name.title },
-    { title: "Ms", name: "name.title", value: inputValue.name.title },
-    { title: "Miss", name: "name.title", value: inputValue.name.title }]
+    { title: "Mr",  inputName:"mr",name: "name.title", value: inputValue.name.title },
+    { title: "Mrs", inputName:"mrs", name: "name.title", value: inputValue.name.title },
+    { title: "Ms", inputName:"ms", name: "name.title", value: inputValue.name.title },
+    { title: "Miss", inputName:"miss", name: "name.title", value: inputValue.name.title }]
 
   return (
     <React.Fragment>
@@ -84,10 +113,10 @@ export const FiltersOptions = ({ setOpenFilters, openFilter }) => {
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <RadioField options={titleOptions} label="Title" />
+          <InputField type={"text"} label={"Title"} value={inputValue.name.title} name={"name.title"} handleInputChange={handleInputChange} />
           <InputField type={"text"} label={"First Name"} value={inputValue.name.first} name={"name.first"} handleInputChange={handleInputChange} />
           <InputField type={"text"} label={"Last Name"} value={inputValue.name.last} name={"name.last"} handleInputChange={handleInputChange} />
-          <RadioField options={genderOptions} label="Gender" />
+          <RadioField options={genderOptions} label="Gender" handleInputChange={handleInputChange} />
           <InputField type={"text"} label={"Email"} value={inputValue.email} name={"email"} handleInputChange={handleInputChange} />
           <InputField type={"text"} label={"Phone"} value={inputValue.phone} name={"phone"} handleInputChange={handleInputChange} />
           <InputField type={"text"} label={"Street Number"} value={inputValue.location.street.number} name={"location.street.number"} handleInputChange={handleInputChange} />
@@ -97,8 +126,11 @@ export const FiltersOptions = ({ setOpenFilters, openFilter }) => {
           <InputField type={"text"} label={"Country"} value={inputValue.location.country} name={"location.country"} handleInputChange={handleInputChange} />
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={() => setOpenFilters(false)}>
+          <Button autoFocus onClick={applyFilter}>
             Apply Filters
+          </Button>
+          <Button autoFocus onClick={resetFilter}>
+            Reset Filters
           </Button>
         </DialogActions>
       </BootstrapDialog>

@@ -40,7 +40,7 @@ export const CardContact = ({ filteredContacts, sortedCharacters }) => {
 
                     const { large } = picture;
                     return (
-                      <div key={index} className="card=container">
+                      <div key={index} className="card-container">
                         <div className="card-item cursor" key={index}>
                           <Card>
                             <CardHeader

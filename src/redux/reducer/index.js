@@ -2,7 +2,9 @@ import * as actionTypes from "../../constants/actions"
 
 const initialState = {
   contacts: [],
-  filteredContacts:{},
+  filteredContacts: {},
+  filter: {},
+  detailedContacts :{}
 }
 
 export const contactsReducer = (state = initialState, { type, payload }) => {
@@ -13,12 +15,24 @@ export const contactsReducer = (state = initialState, { type, payload }) => {
         contacts: payload
       }
 
-      case actionTypes.SET_FILTER_CONTACTS:
+    case actionTypes.SET_FILTER_CONTACT:
+      return {
+        ...state,
+        filteredContacts: payload
+      }
+
+    case actionTypes.SET_FILTER:
+      return {
+        ...state,
+        filter: payload
+      }
+
+      case actionTypes.SET_DETAILED_FILTERED_CONTACTS:
         return {
           ...state,
-          filteredContacts: payload
+          detailedContacts: payload
         }
-
+  
     default:
       return state
   }
