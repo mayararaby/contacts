@@ -21,10 +21,10 @@ Phony is a web application designed to display cards for contact users, providin
   npm run doc
 
 ## Features
-Add contact
-Edit contact
-Favorite contacts
-Filter contacts
+- Add contact
+- Edit contact
+- Favorite contacts
+- Filter contacts
 
 ## Demo : [click here](https://contacts-virid-two.vercel.app/)
 
