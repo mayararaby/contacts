@@ -29,11 +29,13 @@ export const AddNewContactIcon = ({ filteredContacts, sortedCharacters, type , c
     icon: <PersonAddIcon />,
     function: () => navigate("/add")
 
-  }, {
-    name: "Search Contact",
-    icon: <PersonSearchIcon />,
-    function: () => (setOpenFilters(true))
-  }, {
+  }, 
+  // {
+  //   name: "Search Contact",
+  //   icon: <PersonSearchIcon />,
+  //   function: () => (setOpenFilters(true))
+  // }, 
+  {
     name: "Sort Contact",
     icon: <SwapVertIcon />,
     function: () => sortKeys(sortedCharacters, filteredContacts, dispatch)
