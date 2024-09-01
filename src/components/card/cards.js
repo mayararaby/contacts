@@ -32,7 +32,6 @@ export const CardContact = ({ filteredContacts, sortedCharacters, filteredCatego
     <div className="cards-container">
       {
         sortedCharacters.length ? sortedCharacters.map((character, index) => {
-          if (filteredCategories[character]) {
             return (
               <div className="main-card-container" key={index}>
                 <CharItem
@@ -47,7 +46,6 @@ export const CardContact = ({ filteredContacts, sortedCharacters, filteredCatego
                       const { title, first, last } = name
 
                       const { large } = picture;
-                      if (filteredCategories[character].contacts.find(contact => contact.uuid === row.uuid))
                         return (
                           <div key={index} className="card-container">
                             <div className="card-item cursor" key={index}>
@@ -95,7 +93,6 @@ export const CardContact = ({ filteredContacts, sortedCharacters, filteredCatego
                 </div>
               </div>
             )
-          } 
         }) : <CircularProgress color="inherit" />
 
       }
