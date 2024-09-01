@@ -1,1 +1,1 @@
-export const GET_CONTACT_URL = "https://randomuser.me/api/?results=5"
+export const GET_CONTACT_URL = "https://randomuser.me/api/?results=50"
